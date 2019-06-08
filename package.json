@@ -1,28 +1,5 @@
 {
   "name": "chapterly",
-<<<<<<< HEAD
-  "version": "1.0.0",
-  "description": "Book search app for Chingu's voyage-9",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/chingu-voyages/v9-bears-team-40.git"
-  },
-  "keywords": [
-    "chingu",
-    "book",
-    "voyage-9"
-  ],
-  "author": "Lewis Horwood, Sangil Yun",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/chingu-voyages/v9-bears-team-40/issues"
-  },
-  "homepage": "https://github.com/chingu-voyages/v9-bears-team-40#readme"
-=======
   "version": "0.1.0",
   "description": "Book search app for Chingu's voyage-9",
   "main": "index.js",
@@ -47,6 +24,7 @@
     "@types/node": "12.0.7",
     "@types/react": "16.8.19",
     "@types/react-dom": "16.8.4",
+    "express": "^4.17.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
@@ -72,6 +50,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
->>>>>>> Initial commit from Create React App
+  },
+  "proxy": "http://localhost:8080"
 }
