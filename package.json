@@ -34,12 +34,14 @@
     "typescript": "3.5.1"
   },
   "devDependencies": {
+    "concurrently": "^4.1.0",
     "nodemon": "^1.19.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"nodemon server.js\" \"react-scripts start\"",
+    "start-client": "react-scripts start",
+    "start-server": "node server.js",
     "build": "react-scripts build",
-    "dev": "nodemon server.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
