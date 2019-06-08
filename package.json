@@ -24,6 +24,23 @@
   "homepage": "https://github.com/chingu-voyages/v9-bears-team-40#readme"
 =======
   "version": "0.1.0",
+  "description": "Book search app for Chingu's voyage-9",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chingu-voyages/v9-bears-team-40.git"
+  },
+  "keywords": [
+    "chingu",
+    "book",
+    "voyage-9"
+  ],
+  "author": "Lewis Horwood, Sangil Yun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chingu-voyages/v9-bears-team-40/issues"
+  },
+  "homepage": "https://github.com/chingu-voyages/v9-bears-team-40#readme",
   "private": true,
   "dependencies": {
     "@types/jest": "24.0.13",
