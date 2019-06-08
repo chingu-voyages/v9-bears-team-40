@@ -1,0 +1,24 @@
+{
+  "name": "chapterly",
+  "version": "1.0.0",
+  "description": "Book search app for Chingu's voyage-9",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chingu-voyages/v9-bears-team-40.git"
+  },
+  "keywords": [
+    "chingu",
+    "book",
+    "voyage-9"
+  ],
+  "author": "Lewis Horwood, Sangil Yun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chingu-voyages/v9-bears-team-40/issues"
+  },
+  "homepage": "https://github.com/chingu-voyages/v9-bears-team-40#readme"
+}
