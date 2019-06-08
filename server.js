@@ -6,7 +6,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/test', (req, res) => {
   console.log('test hit')
-  return res.json('Hello, you\'re great')
+  return res.json({test: 'Hello, you\'re great'})
 })
 
 app.get('/*', function (req, res) {

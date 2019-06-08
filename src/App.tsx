@@ -15,13 +15,16 @@ class App extends React.Component<{}, SApp> {
     }
   }
 
-  /*componentDidMount() {
+  componentDidMount() {
     fetch('/test')
     .then((res) => {
-      console.log(JSON.stringify(res.body))
-      this.setState({test: "Hi"})
+      console.log(res)
+      res.json().then((data) => {
+        console.log(data)
+        this.setState({test: data.test})
+      })
     })
-  }*/
+  }
 
   render(){
     return (
