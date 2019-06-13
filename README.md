@@ -5,15 +5,9 @@ A book-finding app created for Chingu's voyage-9 project.
 You need to start the server (`npm run-script dev`) and the react app (`npm start`).
 
 -- docker
-1. docker build -t voyage-9 .
-(this might take some time)
 
-2. docker run -it -p 3000:3000 voyage-9
+1. docker-compose up --build
 
-3. npm start (in the docker container)
-
-![image](https://user-images.githubusercontent.com/35569652/59143547-81499c80-8a07-11e9-828a-85304f0f9c33.png)
-
-4. go to localhost:3000
+2. go to http://localhost:3000/
 
 Created using create-react-app.
