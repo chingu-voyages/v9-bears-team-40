@@ -1,6 +1,6 @@
 FROM node:10.15.1
 
-WORKDIR /usr
+WORKDIR /usr/src/V9-BEARS-TEAM-40
 
 COPY ./ ./
 
