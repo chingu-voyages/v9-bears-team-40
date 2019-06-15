@@ -5,7 +5,7 @@ const app = express();
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/test', (req, res) => {
-  console.log('test hit')
+  console.log('test hit1')
   return res.json({test: 'Hello, you\'re great'})
 })
 
