@@ -21,8 +21,7 @@ jobs:
         - image: circleci/node:8.9 # the primary container, where your job's commands are run
       steps:
         - checkout
-        - echo: echo "helloooo!"
-
+        - run: echo "helloooo!"
 workflows:
   version: 2
   build_test_and_lint:
