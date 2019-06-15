@@ -10,6 +10,8 @@ services:
     working_dir: /usr/src/V9-BEARS-TEAM-40
     ports:
       - "3000:3000"
+    volumes:
+      - .:/usr/src/V9-BEARS-TEAM-40
   postgres:
     image: postgres
     environment:
