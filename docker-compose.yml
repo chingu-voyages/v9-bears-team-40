@@ -2,6 +2,7 @@ version: '3.6'
 
 # react, backend
 services:
+
   v9-bears-team-40:
     container_name: backend
     build: ./
@@ -9,10 +10,11 @@ services:
     working_dir: /usr/src/V9-BEARS-TEAM-40
     ports:
       - "3000:3000"
-
-
-# postgres
-  # postgres:
-  #   image: postgres
-  #   ports:
-  #     - "5432:5432"
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: voyage-9-db
+    ports:
+      - "5432:5432"
