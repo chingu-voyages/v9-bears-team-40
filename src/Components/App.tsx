@@ -1,15 +1,22 @@
-import React from 'react';
+import React from "react";
+import styled from "../utils/theme";
 
-interface SApp {
-  test: string
+//Example styled component
+const Heading = styled.h1`
+  color: ${props => props.theme.colors.brand};
+`;
+
+//App state types
+interface AppState {
+  test: string;
 }
 
-class App extends React.Component<{}, SApp> {
+class App extends React.Component<{}, AppState> {
   constructor(props: any) {
-    super(props)
+    super(props);
     this.state = {
       test: ""
-    }
+    };
   }
 
   /*
@@ -25,14 +32,12 @@ class App extends React.Component<{}, SApp> {
     })
   }*/
 
-  render(){
+  render() {
     return (
-      <div className="App">
-        <p>
-          {this.state.test} test test
-        </p>
+      <div>
+        <Heading>Chapterly</Heading>
       </div>
-    )
+    );
   }
 }
 
