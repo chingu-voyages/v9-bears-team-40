@@ -49,7 +49,7 @@
     "start-client": "react-scripts start",
     "start-server": "nodemon server.js",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
