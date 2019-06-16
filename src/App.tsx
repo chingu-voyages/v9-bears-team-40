@@ -1,6 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
 interface SApp {
   test: string
@@ -9,7 +7,6 @@ interface SApp {
 class App extends React.Component<{}, SApp> {
   constructor(props: any) {
     super(props)
-
     this.state = {
       test: ""
     }
@@ -29,20 +26,9 @@ class App extends React.Component<{}, SApp> {
   render(){
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            {this.state.test}
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <p>
+          {this.state.test} test test
+        </p>
       </div>
     )
   }
