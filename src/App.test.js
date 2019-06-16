@@ -9,3 +9,9 @@ Enzyme.configure({ adapter: new Adapter() });
 it("expect to render App component", () => {
   expect(shallow(<App />).length).toEqual(1);
 });
+
+// it("snapshot test", () => {
+//     expect(shallow(<App />).length).toMatchSnapshot();
+//   });
+
+// npm test -- --coverage
