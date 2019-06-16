@@ -12,6 +12,8 @@ class App extends React.Component<{}, SApp> {
     }
   }
 
+  /*
+  How to retrieve data from the Express backend
   componentDidMount() {
     fetch('/test')
     .then((res) => {
@@ -21,7 +23,7 @@ class App extends React.Component<{}, SApp> {
         this.setState({test: data.test})
       })
     })
-  }
+  }*/
 
   render(){
     return (
