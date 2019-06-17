@@ -8,10 +8,19 @@ import App from "./Components/App";
 import * as serviceWorker from "./serviceWorker";
 
 const GlobalStyles = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css?family=Bree+Serif|Raleway:300&display=swap');
   body {
     color: ${props => props.theme.colors.body};
+    font-family: ${props => props.theme.fonts.body};
     margin: 0;
     padding: 0;
+  }
+  h1, h2, h3, h4 {
+    font-family: ${props => props.theme.fonts.heading};
+  }
+  h1 {
+    font-size: 2rem;
+    line-height: 2rem;
   }
 `;
 

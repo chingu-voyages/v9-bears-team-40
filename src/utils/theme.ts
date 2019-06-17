@@ -18,6 +18,10 @@ export interface IThemeInterface {
     body: string;
     link: string;
   };
+  fonts: {
+    body: string;
+    heading: string;
+  };
 }
 
 export const theme = {
@@ -27,6 +31,10 @@ export const theme = {
     brand: "#7b7263",
     body: "#393d3f",
     link: "#7ca982"
+  },
+  fonts: {
+    body: "'Raleway', sans-serif",
+    heading: "'Bree Serif', serif"
   }
 };
 
