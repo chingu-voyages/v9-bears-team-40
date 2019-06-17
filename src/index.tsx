@@ -1,15 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { ThemeProvider, theme } from "./utils/theme";
+import { createGlobalStyle, ThemeProvider, theme } from "./utils/theme";
 
 import App from "./Components/App";
 
 import * as serviceWorker from "./serviceWorker";
 
+const GlobalStyles = createGlobalStyle`
+  body {
+    color: ${props => props.theme.colors.body};
+    margin: 0;
+    padding: 0;
+  }
+`;
+
 ReactDOM.render(
   <ThemeProvider theme={theme}>
-    <App />
+    <React.Fragment>
+      <GlobalStyles />
+      <App />
+    </React.Fragment>
   </ThemeProvider>,
   document.getElementById("root")
 );
