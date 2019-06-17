@@ -11,6 +11,13 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
+const Main = styled.main`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 3rem;
+`;
+
 //App state types
 interface AppState {}
 
@@ -24,6 +31,7 @@ class App extends React.Component<{}, AppState> {
     return (
       <Wrapper>
         <Header />
+        <Main />
       </Wrapper>
     );
   }

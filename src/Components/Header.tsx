@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "../utils/theme";
 
 //Example styled component
-const Wrapper = styled.div`
+const Wrapper = styled.header`
   align-items: center;
   background-color: ${props => props.theme.colors.fg};
   box-sizing: border-box;
@@ -24,7 +24,7 @@ export const Header: React.FC<HeaderProps> = props => {
   return (
     <Wrapper>
       <h1>Chapterly</h1>
-      <p>Welcome back, $user.</p>
+      <button>Login</button>
     </Wrapper>
   );
 };
