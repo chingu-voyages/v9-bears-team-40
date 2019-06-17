@@ -2,6 +2,7 @@ import * as styledComponents from "styled-components";
 
 const {
   default: styled,
+  createGlobalStyle,
   css,
   keyframes,
   ThemeProvider
@@ -21,8 +22,8 @@ export interface IThemeInterface {
 
 export const theme = {
   colors: {
-    bg: "#e2dadb",
-    fg: "#fdfdff",
+    bg: "#fdfdff",
+    fg: "#e2dadb",
     brand: "#7b7263",
     body: "#393d3f",
     link: "#7ca982"
@@ -30,4 +31,4 @@ export const theme = {
 };
 
 export default styled;
-export { css, keyframes, ThemeProvider };
+export { createGlobalStyle, css, keyframes, ThemeProvider };
