@@ -3,6 +3,7 @@ import styled from "../utils/theme";
 
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import SearchBar from "./SearchBar";
 
 const Wrapper = styled.div`
   background-color: ${props => props.theme.colors.bg};
@@ -32,7 +33,9 @@ class App extends React.Component<{}, AppState> {
     return (
       <Wrapper>
         <Header />
-        <Main />
+        <Main>
+          <SearchBar />
+        </Main>
         <Footer />
       </Wrapper>
     );
