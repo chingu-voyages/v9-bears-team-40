@@ -2,6 +2,7 @@ import React from "react";
 import styled from "../utils/theme";
 
 import { Header } from "./Header";
+import { Footer } from "./Footer";
 
 const Wrapper = styled.div`
   background-color: ${props => props.theme.colors.bg};
@@ -32,6 +33,7 @@ class App extends React.Component<{}, AppState> {
       <Wrapper>
         <Header />
         <Main />
+        <Footer />
       </Wrapper>
     );
   }
