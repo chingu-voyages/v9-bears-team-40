@@ -52,9 +52,9 @@ export const Footer: React.FC<{}> = () => {
         </FooterDescription>
       </FooterAbout>
       <FooterLinks>
-        <a href="">About</a>
-        <a href="">Privacy</a>
-        <a href="">Contact</a>
+        <a href="https://example.com">About</a>
+        <a href="https://example.com">Privacy</a>
+        <a href="https://example.com">Contact</a>
       </FooterLinks>
     </Wrapper>
   );
