@@ -1,6 +1,9 @@
 import * as React from "react";
 import styled from "../utils/theme";
 
+//Prop types
+interface HeaderProps {}
+
 //Example styled component
 const Wrapper = styled.header`
   align-items: center;
@@ -16,9 +19,6 @@ const Wrapper = styled.header`
     margin: 0;
   }
 `;
-
-//Prop types
-interface HeaderProps {}
 
 export const Header: React.FC<HeaderProps> = props => {
   return (
