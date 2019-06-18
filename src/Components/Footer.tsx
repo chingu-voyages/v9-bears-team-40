@@ -3,26 +3,29 @@ import styled from "../utils/theme";
 
 //Example styled component
 const Wrapper = styled.footer`
-  align-items: center;
+  align-items: baseline;
   background-color: ${props => props.theme.colors.fg};
   display: flex;
   flex-grow: 0;
   justify-content: space-between;
   line-height: 1.5rem;
-  min-height: 4.5rem;
   & > * {
     margin: 1.5rem;
   }
 `;
+
 const FooterAbout = styled.div`
   display: flex;
+  flex-direction: column;
+  h1 {
+    margin: 0 0 1.5rem 0;
+  }
 `;
 
 const FooterDescription = styled.div`
   font-size: 0.8rem;
   line-height: 1.2rem;
-  margin: 0 1.2rem;
-  max-width: 30%;
+  max-width: 30rem;
 `;
 
 const FooterLinks = styled.div`
