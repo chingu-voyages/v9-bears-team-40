@@ -3,7 +3,7 @@ import styled from "../utils/theme";
 
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import SearchBar from "./SearchBar";
+import SearchBar from "./SearchBar.js";
 
 const Wrapper = styled.div`
   background-color: ${props => props.theme.colors.bg};
