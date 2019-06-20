@@ -38,7 +38,7 @@ const FooterLinks = styled.div`
   }
 `;
 
-export const Footer: React.FunctionComponent<{}> = () => {
+const Footer: React.FunctionComponent<{}> = () => {
   return (
     <Wrapper>
       <FooterAbout>
@@ -59,3 +59,5 @@ export const Footer: React.FunctionComponent<{}> = () => {
     </Wrapper>
   );
 };
+
+export default Footer;

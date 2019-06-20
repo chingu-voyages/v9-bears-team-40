@@ -20,7 +20,7 @@ const Wrapper = styled.header`
   }
 `;
 
-export const Header: React.FunctionComponent<HeaderProps> = props => {
+const Header: React.FunctionComponent<HeaderProps> = props => {
   return (
     <Wrapper>
       <h1>Chapterly</h1>
@@ -28,3 +28,5 @@ export const Header: React.FunctionComponent<HeaderProps> = props => {
     </Wrapper>
   );
 };
+
+export default Header;
