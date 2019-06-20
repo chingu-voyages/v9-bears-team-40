@@ -1,5 +1,8 @@
 import * as React from "react";
 import styled from "../utils/theme";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import Home from "../Pages/Home";
 
 const Wrapper = styled.div`
   background-color: ${props => props.theme.colors.bg};
@@ -24,7 +27,13 @@ class App extends React.Component<{}, AppState> {
   };
 
   render() {
-    return <Wrapper></Wrapper>;
+    return (
+      <Router>
+        <Wrapper>
+          <Route exact path="/" component={Home} />
+        </Wrapper>
+      </Router>
+    );
   }
 }
 

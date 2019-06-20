@@ -17,7 +17,13 @@ const Home: React.FunctionComponent<HomeProps> = props => {
   return (
     <React.Fragment>
       <Header />
-      <Main />
+      <Main>
+        <h1>Home</h1>
+        <p>
+          Let's refine the style of this page later (no header except auth,
+          maybe no footer?) so that the search is presented clearly.
+        </p>
+      </Main>
       <Footer />
     </React.Fragment>
   );
