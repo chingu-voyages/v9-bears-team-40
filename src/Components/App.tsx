@@ -31,6 +31,15 @@ class App extends React.Component<{}, AppState> {
       <Router>
         <Wrapper>
           <Route exact path="/" component={Home} />
+          {/*
+            Later, use queryString parsing to search using multiple optional parameters (isbn, author, title, etc), or use match params like below to use an identifier (e.g. isbn)
+          */}
+          <Route
+            path="/b/:isbn"
+            render={props => (
+              <div>Here is a book with ISBN {props.match.params.isbn}</div>
+            )}
+          />
         </Wrapper>
       </Router>
     );
