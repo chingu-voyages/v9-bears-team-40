@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "../utils/theme";
 
 //Prop types
-interface HeaderProps {}
+type HeaderProps = {};
 
 //Example styled component
 const Wrapper = styled.header`
@@ -20,7 +20,7 @@ const Wrapper = styled.header`
   }
 `;
 
-export const Header: React.FC<HeaderProps> = props => {
+export const Header: React.FunctionComponent<HeaderProps> = props => {
   return (
     <Wrapper>
       <h1>Chapterly</h1>

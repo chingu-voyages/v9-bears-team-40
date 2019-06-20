@@ -38,7 +38,7 @@ const FooterLinks = styled.div`
   }
 `;
 
-export const Footer: React.FC<{}> = () => {
+export const Footer: React.FunctionComponent<{}> = () => {
   return (
     <Wrapper>
       <FooterAbout>

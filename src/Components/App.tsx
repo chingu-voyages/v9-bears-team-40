@@ -21,13 +21,18 @@ const Main = styled.main`
 `;
 
 //App state types
-interface AppState {}
+type AppState = {
+  search: {
+    term: string;
+  };
+};
 
 class App extends React.Component<{}, AppState> {
-  constructor(props: {}) {
-    super(props);
-    this.state = {};
-  }
+  state = {
+    search: {
+      term: ""
+    }
+  };
 
   render() {
     return (
