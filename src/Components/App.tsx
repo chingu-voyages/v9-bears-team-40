@@ -1,9 +1,8 @@
-import React from "react";
+import * as React from "react";
 import styled from "../utils/theme";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import { Header } from "./Header";
-import { Footer } from "./Footer";
-import SearchBar from "./SearchBar";
+import Home from "../Pages/Home";
 
 const Wrapper = styled.div`
   background-color: ${props => props.theme.colors.bg};
@@ -13,31 +12,36 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const Main = styled.main`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  padding: 3rem;
-`;
-
 //App state types
-interface AppState {}
+type AppState = {
+  search: {
+    term: string;
+  };
+};
 
 class App extends React.Component<{}, AppState> {
-  constructor(props: {}) {
-    super(props);
-    this.state = {};
-  }
+  state = {
+    search: {
+      term: ""
+    }
+  };
 
   render() {
     return (
-      <Wrapper>
-        <Header />
-        <Main>
-          <SearchBar />
-        </Main>
-        <Footer />
-      </Wrapper>
+      <Router>
+        <Wrapper>
+          <Route exact path="/" component={Home} />
+          {/*
+            Later, use queryString parsing to search using multiple optional parameters (isbn, author, title, etc), or use match params like below to use an identifier (e.g. isbn)
+          */}
+          <Route
+            path="/b/:isbn"
+            render={props => (
+              <div>Here is a book with ISBN {props.match.params.isbn}</div>
+            )}
+          />
+        </Wrapper>
+      </Router>
     );
   }
 }
