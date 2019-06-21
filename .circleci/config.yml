@@ -16,18 +16,9 @@ jobs:
       - run: echo "testing stuff" # run the `echo` command
       - run: npm install
       - run: npm test
-  hithere:
-    docker: # use the docker executor type; machine and macos executors are also supported
-      - image: circleci/node:8.9 # the primary container, where your job's commands are run
-    steps:
-      - checkout
-      - run: echo "helloo!"
 workflows:
   version: 2
   build_test_and_lint:
     jobs:
       - build
-      - hithere
-      - test:
-          requires:
-            - hithere
+      - test
