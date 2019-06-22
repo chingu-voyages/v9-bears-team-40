@@ -1,12 +1,9 @@
 import React from "react";
 
 class SearchBar extends React.Component {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      keyword: ""
-    };
-  }
+  state = {
+    keyword: ""
+  };
 
   keywordChange = (event: any) => {
     this.setState({ keyword: event.target.value });
