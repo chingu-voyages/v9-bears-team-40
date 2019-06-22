@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled from "../utils/theme";
+//@ts-ignore : installed in docker container
 import { BrowserRouter as Router } from "react-router-dom";
 
 import Routes from "../routes/routes";
