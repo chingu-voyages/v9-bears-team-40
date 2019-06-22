@@ -18,16 +18,18 @@ type IBookPageProps = {
 };
 
 type bookObject = {
-  title: string;
+  title?: string;
   authors?: [string];
   date?: string;
   isbn?: string;
   pages?: string;
   description?: string;
+  error?: string;
 };
 
 interface IBookPageState {
   searchResults: Array<bookObject>;
+  noResult: boolean;
 }
 class BookPage extends React.Component<
   RouteComponentProps<IBookPageProps>,
@@ -38,7 +40,8 @@ class BookPage extends React.Component<
   constructor(props: RouteComponentProps<IBookPageProps>) {
     super(props);
     this.state = {
-      searchResults: []
+      searchResults: [],
+      noResult: false
     };
   }
   componentDidMount() {
@@ -50,10 +53,15 @@ class BookPage extends React.Component<
       .then(data => {
         let searchResults = data.items;
         let bookObjects: Array<bookObject> = [];
-        searchResults.map((searchResult: any) => {
-          bookObjects.push(searchResult.volumeInfo);
-        });
-        return bookObjects;
+        if (searchResults) {
+          searchResults.map((searchResult: any) => {
+            bookObjects.push(searchResult.volumeInfo);
+          });
+          return bookObjects;
+        } else {
+          this.setState({ noResult: true });
+          return bookObjects;
+        }
       })
       .then(bookObjects => this.setState({ searchResults: bookObjects }));
   }
@@ -63,10 +71,14 @@ class BookPage extends React.Component<
       <React.Fragment>
         <Header />
         <Main>
-          {this.state.searchResults.map((bookInfo: bookObject, key) => {
-            return <Book key={key} title={bookInfo.title}></Book>;
-          })}
-          <h1>{this.props.match.params.general}</h1>
+          <h1>Search keyword : {this.props.match.params.general}</h1>
+          {this.state.noResult ? (
+            <h1>"Nothing here :( Try searching again!"</h1>
+          ) : (
+            this.state.searchResults.map((bookInfo: bookObject, key) => {
+              return <Book key={key} title={bookInfo.title}></Book>;
+            })
+          )}
         </Main>
         <Footer />
       </React.Fragment>
