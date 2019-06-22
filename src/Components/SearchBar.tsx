@@ -41,7 +41,6 @@ class SearchBar extends React.Component {
   };
 
   buttonClickHandler = (event: any) => {
-    console.log("input string", event.target.value);
     this.setState({ keyword: event.target.value });
   };
 
@@ -50,26 +49,15 @@ class SearchBar extends React.Component {
       this.buttonClickHandler(event);
     }
   };
+
   render() {
     return (
       <Wrapper>
-        <Input onChange={this.buttonClickHandler} />
-        {/* <Button to={`/b/${encodeURI(this.state.keyword)}`}>
-          Search
-        </Button> */}
-
-        <Route
-          render={({ history }) => (
-            <button
-              type="button"
-              onClick={() => {
-                history.push(`/b/${encodeURI(this.state.keyword)}`);
-              }}
-            >
-              Search
-            </button>
-          )}
+        <Input
+          onChange={this.buttonClickHandler}
+          onKeyPress={this.enterKeyHandler}
         />
+        <Button to={`/b/${encodeURI(this.state.keyword)}`}>Search</Button>
       </Wrapper>
     );
   }
