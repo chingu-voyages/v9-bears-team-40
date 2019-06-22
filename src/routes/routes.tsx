@@ -1,16 +1,16 @@
 import * as React from "react";
 import { Route } from "react-router-dom";
 
-import Home from "../Pages/Home";
-import Book from "../Pages/Book";
+import HomePage from "../Pages/HomePage";
+import BookPage from "../Pages/BookPage";
 
 const Routes = () => (
   <React.Fragment>
-    <Route exact path="/" component={Home} />
+    <Route exact path="/" component={HomePage} />
     <Route
       path="/b/:isbn"
       render={props => (
-        <Book
+        <BookPage
           search={{
             isbn: props.match.params.isbn
           }}

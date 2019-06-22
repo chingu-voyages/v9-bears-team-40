@@ -1,8 +1,8 @@
 import * as React from "react";
-import styled from "../utils/theme";
-
-import Header from "../Components/Header";
+import Book from "../Components/Book";
 import Footer from "../Components/Footer";
+import Header from "../Components/Header";
+import styled from "../utils/theme";
 
 const Main = styled.main`
   display: flex;
@@ -11,23 +11,29 @@ const Main = styled.main`
   padding: 3rem;
 `;
 
-type BookProps = {
+type BookPageProps = {
   search: {
     isbn?: string;
   };
 };
 
-const Book: React.FunctionComponent<BookProps> = props => {
+const BookPage: React.FunctionComponent<BookPageProps> = props => {
+  //You can use this example isbn
+  //9780451191144
+
+  let bookData = {};
+
   return (
     <React.Fragment>
       <Header />
       <Main>
         <h1>Book title</h1>
         <p>Here's a super neat book delivered straight to your console</p>
+        <Book book={bookData} />
       </Main>
       <Footer />
     </React.Fragment>
   );
 };
 
-export default Book;
+export default BookPage;
