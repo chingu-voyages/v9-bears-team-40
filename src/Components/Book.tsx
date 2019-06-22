@@ -1,5 +1,4 @@
 import * as React from "react";
-import { object } from "prop-types";
 
 type BookProps = {
   search: {
