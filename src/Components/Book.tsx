@@ -1,5 +1,4 @@
 import * as React from "react";
-//import styled from '../utils/theme'
 
 type BookProps = {
   search: {
@@ -46,10 +45,10 @@ class Book extends React.Component<BookProps, BookState> {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <h1>{this.state.error ? "Oops" : this.state.volumeInfo.title}</h1>
         <p>{this.state.errorMessage || this.state.volumeInfo.description}</p>
-      </div>
+      </React.Fragment>
     );
   }
 }

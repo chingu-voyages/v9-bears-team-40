@@ -1,6 +1,8 @@
 import * as React from "react";
 import styled from "../utils/theme";
 
+import SearchBar from "./SearchBar";
+
 //Prop types
 type HeaderProps = {};
 
@@ -24,6 +26,7 @@ const Header: React.FunctionComponent<HeaderProps> = props => {
   return (
     <Wrapper>
       <h1>Chapterly</h1>
+      <SearchBar />
       <button>Login</button>
     </Wrapper>
   );
