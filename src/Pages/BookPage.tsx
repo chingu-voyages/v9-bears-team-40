@@ -3,7 +3,7 @@ import Book from "../Components/Book";
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import styled from "../utils/theme";
-import { RouteComponentProps, withRouter } from "react-router";
+import { RouteComponentProps } from "react-router";
 
 const Main = styled.main`
   display: flex;
@@ -54,9 +54,9 @@ class BookPage extends React.Component<
         let searchResults = data.items;
         let bookObjects: Array<bookObject> = [];
         if (searchResults) {
-          searchResults.map((searchResult: any) => {
-            bookObjects.push(searchResult.volumeInfo);
-          });
+          searchResults.map((searchResult: any) =>
+            bookObjects.push(searchResult.volumeInfo)
+          );
           return bookObjects;
         } else {
           this.setState({ noResult: true });

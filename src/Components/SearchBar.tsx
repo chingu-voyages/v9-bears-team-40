@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "../utils/theme";
-import { Route, Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Button = styled(Link)`
   background-color: ${props => props.theme.colors.link};

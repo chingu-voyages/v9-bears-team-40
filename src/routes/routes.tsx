@@ -3,7 +3,6 @@ import { Route } from "react-router-dom";
 
 import HomePage from "../Pages/HomePage";
 import BookPage from "../Pages/BookPage";
-import { RouteComponentProps } from "react-router";
 
 interface IKey {
   key: string;
