@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "../utils/theme";
-import { Link } from "react-router-dom";
+import { Route, Link, withRouter } from "react-router-dom";
 
 const Button = styled(Link)`
   background-color: ${props => props.theme.colors.link};
@@ -40,25 +40,36 @@ class SearchBar extends React.Component {
     keyword: ""
   };
 
-  keywordChange = (event: any) => {
+  buttonClickHandler = (event: any) => {
+    console.log("input string", event.target.value);
     this.setState({ keyword: event.target.value });
+  };
+
+  enterKeyHandler = (event: any) => {
+    if (event.key === "Enter") {
+      this.buttonClickHandler(event);
+    }
   };
   render() {
     return (
       <Wrapper>
-        <Input onChange={this.keywordChange} />
-        <Button
-          to={{
-            pathname: `/b/${encodeURI(this.state.keyword)}`,
-            state: {
-              search: {
-                general: this.state.keyword
-              }
-            }
-          }}
-        >
+        <Input onChange={this.buttonClickHandler} />
+        {/* <Button to={`/b/${encodeURI(this.state.keyword)}`}>
           Search
-        </Button>
+        </Button> */}
+
+        <Route
+          render={({ history }) => (
+            <button
+              type="button"
+              onClick={() => {
+                history.push(`/b/${encodeURI(this.state.keyword)}`);
+              }}
+            >
+              Search
+            </button>
+          )}
+        />
       </Wrapper>
     );
   }
