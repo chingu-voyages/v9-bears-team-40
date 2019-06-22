@@ -1,4 +1,5 @@
 import * as React from "react";
+import { object } from "prop-types";
 
 type BookProps = {
   search: {
@@ -10,37 +11,66 @@ type BookProps = {
 };
 
 type BookState = {
-  volumeInfo: any;
   error: boolean;
-  errorMessage: string;
+  errorMessage: string | null;
+  loading: boolean;
+  book: {
+    title: string;
+    authors?: [string];
+    date?: string;
+    isbn?: string;
+    pages?: string;
+    description?: string;
+  };
 };
 
 class Book extends React.Component<BookProps, BookState> {
   state = {
-    volumeInfo: {
-      title: "Loading",
-      description: "Just a second..."
-    },
     error: false,
-    errorMessage: ""
+    errorMessage: null,
+    loading: true,
+    book: {
+      title: "Loading..."
+    }
   };
 
   getBook(searchObj: BookProps["search"]) {
-    fetch(`https://www.googleapis.com/books/v1/volumes?q=
-            ${searchObj.general}`).then(data => {
-      data.json().then(data => {
-        if (!data.items) {
-          this.setState({
-            error: true,
-            errorMessage: "Nothing here :( Try searching again!"
-          });
-        } else {
-          this.setState({
-            volumeInfo: data.items[0].volumeInfo
-          });
+    this.setState(
+      {
+        loading: true,
+        book: {
+          title: "Loading..."
         }
-      });
-    });
+      },
+      () =>
+        fetch(`https://www.googleapis.com/books/v1/volumes?q=
+            ${searchObj.general}`).then(data => {
+          data.json().then(data => {
+            if (!data.items) {
+              this.setState({
+                error: true,
+                errorMessage: "Nothing here :( Try searching again!",
+                loading: false
+              });
+            } else {
+              const book = data.items[0].volumeInfo;
+              this.setState({
+                book: {
+                  title: book.title,
+                  authors: book.authors,
+                  date: book.publishedDate,
+                  isbn: book.industryIdentifiers[0],
+                  pages: book.pageCount,
+                  description: book.description
+                },
+                error: false,
+                errorMessage: null,
+                loading: false
+              });
+            }
+          });
+        })
+    );
   }
 
   componentWillReceiveProps(nextProps: any) {
@@ -56,8 +86,7 @@ class Book extends React.Component<BookProps, BookState> {
   render() {
     return (
       <React.Fragment>
-        <h1>{this.state.error ? "Oops" : this.state.volumeInfo.title}</h1>
-        <p>{this.state.errorMessage || this.state.volumeInfo.description}</p>
+        <h1>{this.state.book.title}</h1>
       </React.Fragment>
     );
   }
