@@ -2,6 +2,7 @@ import * as React from "react";
 import { Route } from "react-router-dom";
 
 import Home from "../Pages/Home";
+import Book from "../Pages/Book";
 
 const Routes = () => (
   <React.Fragment>
@@ -9,7 +10,11 @@ const Routes = () => (
     <Route
       path="/b/:isbn"
       render={props => (
-        <div>Here is a book with ISBN {props.match.params.isbn}</div>
+        <Book
+          search={{
+            isbn: props.match.params.isbn
+          }}
+        />
       )}
     />
   </React.Fragment>
