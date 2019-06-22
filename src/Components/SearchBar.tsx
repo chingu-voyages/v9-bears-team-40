@@ -49,7 +49,12 @@ class SearchBar extends React.Component {
         <Input onChange={this.keywordChange} />
         <Button
           to={{
-            pathname: `/b/${encodeURI(this.state.keyword)}`
+            pathname: `/b/${encodeURI(this.state.keyword)}`,
+            state: {
+              search: {
+                general: this.state.keyword
+              }
+            }
           }}
         >
           Search

@@ -25,9 +25,9 @@ class Book extends React.Component<BookProps, BookState> {
     errorMessage: ""
   };
 
-  componentWillMount() {
+  getBook(searchObj: BookProps["search"]) {
     fetch(`https://www.googleapis.com/books/v1/volumes?q=
-            ${this.props.search.general}`).then(data => {
+            ${searchObj.general}`).then(data => {
       data.json().then(data => {
         if (!data.items) {
           this.setState({
@@ -41,6 +41,16 @@ class Book extends React.Component<BookProps, BookState> {
         }
       });
     });
+  }
+
+  componentWillReceiveProps(nextProps: any) {
+    if (nextProps.search !== this.props.search) {
+      this.getBook(nextProps.search);
+    }
+  }
+
+  componentWillMount() {
+    this.getBook(this.props.search);
   }
 
   render() {
