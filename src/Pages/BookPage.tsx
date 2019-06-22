@@ -14,22 +14,21 @@ const Main = styled.main`
 type BookPageProps = {
   search: {
     isbn?: string;
+    title?: string;
+    author?: string;
+    general?: string;
   };
 };
 
 const BookPage: React.FunctionComponent<BookPageProps> = props => {
   //You can use this example isbn
-  //9780451191144
-
-  let bookData = {};
+  //9781101137192
 
   return (
     <React.Fragment>
       <Header />
       <Main>
-        <h1>Book title</h1>
-        <p>Here's a super neat book delivered straight to your console</p>
-        <Book book={bookData} />
+        <Book search={props.search} />
       </Main>
       <Footer />
     </React.Fragment>
