@@ -27,20 +27,17 @@ class Book extends React.Component<BookProps, BookState> {
   };
 
   componentWillMount() {
-    //Try this isbn for testing: 9781101137192
     fetch(`https://www.googleapis.com/books/v1/volumes?q=
-            ${
-              this.props.search.isbn ? `isbn:${this.props.search.isbn}` : ""
-            }`).then(data => {
+            ${this.props.search.general}`).then(data => {
       data.json().then(data => {
-        if (data.items.length) {
+        if (!data.items) {
           this.setState({
-            volumeInfo: data.items[0].volumeInfo
+            error: true,
+            errorMessage: "Nothing here :( Try searching again!"
           });
         } else {
           this.setState({
-            error: true,
-            errorMessage: "ISBN not found"
+            volumeInfo: data.items[0].volumeInfo
           });
         }
       });
@@ -50,11 +47,8 @@ class Book extends React.Component<BookProps, BookState> {
   render() {
     return (
       <div>
-        <h1>
-          {this.state.volumeInfo.title ||
-            (this.state.errorMessage || "lol u messed up")}
-        </h1>
-        <p>{this.state.volumeInfo.description}</p>
+        <h1>{this.state.error ? "Oops" : this.state.volumeInfo.title}</h1>
+        <p>{this.state.errorMessage || this.state.volumeInfo.description}</p>
       </div>
     );
   }

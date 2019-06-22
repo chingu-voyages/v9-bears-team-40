@@ -8,11 +8,11 @@ const Routes = () => (
   <React.Fragment>
     <Route exact path="/" component={HomePage} />
     <Route
-      path="/b/:isbn"
+      path="/b/:general"
       render={props => (
         <BookPage
           search={{
-            isbn: props.match.params.isbn
+            general: props.match.params.general
           }}
         />
       )}
