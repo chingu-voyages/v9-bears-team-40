@@ -19,7 +19,7 @@ type ResultPageProps = {
 type ResultPageState = {
   searchResults: Array<bookObject>;
   noResult: boolean;
-  error: any;
+  error: string | null;
 };
 
 //Todo: extract this type to an importable file (for use in /b/ routes)
@@ -44,9 +44,9 @@ class ResultPage extends React.Component<
   };
 
   getSearchResults() {
-    let searchedTerm = this.props.match.params.general;
+    const url = `https://www.googleapis.com/books/v1/volumes?q=${this.props.match.params.general}`;
 
-    fetch(`https://www.googleapis.com/Results/v1/volumes?q=${searchedTerm}`)
+    fetch(url)
       .then(res => {
         return res.json();
       })
@@ -68,10 +68,10 @@ class ResultPage extends React.Component<
           this.setState({
             noResult: false,
             searchResults: searchResults,
-            error: false
+            error: null
           });
         } else {
-          this.setState({ noResult: true, searchResults: [], error: false });
+          this.setState({ noResult: true, searchResults: [], error: null });
         }
       });
   }
@@ -97,7 +97,7 @@ class ResultPage extends React.Component<
               : `Results for '${this.props.match.params.general}'`}
           </h1>
           {this.state.noResult ? (
-            <h1>"Nothing here :( Try searching again!"</h1>
+            <h1>Nothing here :( Try searching again!</h1>
           ) : (
             this.state.searchResults.map((ResultInfo: bookObject, key) => {
               return <Result key={key} title={ResultInfo.title}></Result>;
