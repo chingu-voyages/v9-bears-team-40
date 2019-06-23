@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "../utils/theme";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 const Button = styled(Link)`
   background-color: ${props => props.theme.colors.link};
@@ -37,27 +37,32 @@ const Wrapper = styled.div`
 
 class SearchBar extends React.Component {
   state = {
-    keyword: ""
+    keyword: "",
+    userHasRequestedResults: false
   };
 
-  buttonClickHandler = (event: any) => {
-    this.setState({ keyword: event.target.value });
+  changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({
+      keyword: event.target.value,
+      userHasRequestedResults: false
+    });
   };
 
-  enterKeyHandler = (event: any) => {
+  handleKeyPress = (event: React.KeyboardEvent) => {
     if (event.key === "Enter") {
-      this.buttonClickHandler(event);
+      this.setState({ userHasRequestedResults: true });
     }
   };
 
   render() {
     return (
       <Wrapper>
-        <Input
-          onChange={this.buttonClickHandler}
-          onKeyPress={this.enterKeyHandler}
-        />
-        <Button to={`/b/${encodeURI(this.state.keyword)}`}>Search</Button>
+        {/*Send the user to search results page if they submitted a search query*/}
+        {this.state.userHasRequestedResults ? (
+          <Redirect to={`/s/${this.state.keyword}`} />
+        ) : null}
+        <Input onChange={this.changeHandler} onKeyPress={this.handleKeyPress} />
+        <Button to={`/s/${encodeURI(this.state.keyword)}`}>Search</Button>
       </Wrapper>
     );
   }

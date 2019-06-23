@@ -2,7 +2,7 @@ import * as React from "react";
 import { Route } from "react-router-dom";
 
 import HomePage from "../Pages/HomePage";
-import BookPage from "../Pages/BookPage";
+import ResultsPage from "../Pages/ResultsPage";
 
 interface IKey {
   key: string;
@@ -10,12 +10,21 @@ interface IKey {
 
 const Routes = () => (
   <React.Fragment>
+    {/*Home*/}
     <Route exact path="/" component={HomePage} />
-    {/* <Route path="/b/:general" component={BookPage}/> */}
+
+    {/*Display search results*/}
+    <Route path="/s/:general" render={props => <ResultsPage {...props} />} />
+
+    {/*Display one book by ISBN
+    <BookPage {...props} />}*/}
     <Route
-      path="/b/:general"
+      path="/b/:isbn"
       render={props => (
-        <BookPage {...props} key={props.match.params.general}></BookPage>
+        <div>
+          Render the BookPage here later (passing a Book from the results page
+          or fetching data when it's navigated to directly).
+        </div>
       )}
     />
   </React.Fragment>
