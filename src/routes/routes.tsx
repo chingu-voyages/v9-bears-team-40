@@ -10,13 +10,11 @@ interface IKey {
 
 const Routes = () => (
   <React.Fragment>
+    {/*Home*/}
     <Route exact path="/" component={HomePage} />
-    <Route
-      path="/b/:general"
-      render={props => (
-        <BookPage {...props} key={props.match.params.general}></BookPage>
-      )}
-    />
+
+    {/*Display search results*/}
+    <Route path="/b/:general" render={props => <BookPage {...props} />} />
   </React.Fragment>
 );
 
