@@ -1,5 +1,5 @@
 import React from "react";
-import Book from "../Components/Book";
+import Result from "../Components/Result";
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import styled from "../utils/theme";
@@ -12,16 +12,17 @@ const Main = styled.main`
   padding: 3rem;
 `;
 
-type BookPageProps = {
+type ResultPageProps = {
   general?: string;
 };
 
-type BookPageState = {
+type ResultPageState = {
   searchResults: Array<bookObject>;
   noResult: boolean;
   error: any;
 };
 
+//Todo: extract this type to an importable file (for use in /b/ routes)
 type bookObject = {
   title: string;
   authors: [string];
@@ -32,9 +33,9 @@ type bookObject = {
   error?: string;
 };
 
-class BookPage extends React.Component<
-  RouteComponentProps<BookPageProps>,
-  BookPageState
+class ResultPage extends React.Component<
+  RouteComponentProps<ResultPageProps>,
+  ResultPageState
 > {
   state = {
     searchResults: [],
@@ -45,7 +46,7 @@ class BookPage extends React.Component<
   getSearchResults() {
     let searchedTerm = this.props.match.params.general;
 
-    fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchedTerm}`)
+    fetch(`https://www.googleapis.com/Results/v1/volumes?q=${searchedTerm}`)
       .then(res => {
         return res.json();
       })
@@ -61,7 +62,7 @@ class BookPage extends React.Component<
         //Check items were returned and push them to searchResults
         if (data.items && data.items.length) {
           data.items.map((item: any) =>
-            //Todo: Create a function to properly desctructure API result into bookObject and provide proper types for both
+            //Todo: Create a function to properly desctructure API result into ResultObject and provide proper types for both
             searchResults.push(item.volumeInfo)
           );
           this.setState({
@@ -98,8 +99,8 @@ class BookPage extends React.Component<
           {this.state.noResult ? (
             <h1>"Nothing here :( Try searching again!"</h1>
           ) : (
-            this.state.searchResults.map((bookInfo: bookObject, key) => {
-              return <Book key={key} title={bookInfo.title}></Book>;
+            this.state.searchResults.map((ResultInfo: bookObject, key) => {
+              return <Result key={key} title={ResultInfo.title}></Result>;
             })
           )}
         </Main>
@@ -109,4 +110,4 @@ class BookPage extends React.Component<
   }
 }
 
-export default BookPage;
+export default ResultPage;

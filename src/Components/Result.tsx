@@ -1,8 +1,8 @@
 import * as React from "react";
 
 //Todo: Create proper types and components for search results
-const Book = (props: any) => {
+const Result = (props: any) => {
   return <h1>Book title : {props.title}</h1>;
 };
 
-export default Book;
+export default Result;
