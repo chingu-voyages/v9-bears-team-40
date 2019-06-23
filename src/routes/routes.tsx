@@ -11,7 +11,6 @@ interface IKey {
 const Routes = () => (
   <React.Fragment>
     <Route exact path="/" component={HomePage} />
-    {/* <Route path="/b/:general" component={BookPage}/> */}
     <Route
       path="/b/:general"
       render={props => (
