@@ -40,25 +40,24 @@ class SearchBar extends React.Component {
     keyword: ""
   };
 
-  keywordChange = (event: any) => {
+  buttonClickHandler = (event: any) => {
     this.setState({ keyword: event.target.value });
   };
+
+  enterKeyHandler = (event: any) => {
+    if (event.key === "Enter") {
+      this.buttonClickHandler(event);
+    }
+  };
+
   render() {
     return (
       <Wrapper>
-        <Input onChange={this.keywordChange} />
-        <Button
-          to={{
-            pathname: `/b/${encodeURI(this.state.keyword)}`,
-            state: {
-              search: {
-                general: this.state.keyword
-              }
-            }
-          }}
-        >
-          Search
-        </Button>
+        <Input
+          onChange={this.buttonClickHandler}
+          onKeyPress={this.enterKeyHandler}
+        />
+        <Button to={`/b/${encodeURI(this.state.keyword)}`}>Search</Button>
       </Wrapper>
     );
   }
