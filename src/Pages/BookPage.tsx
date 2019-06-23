@@ -12,14 +12,18 @@ const Main = styled.main`
   padding: 3rem;
 `;
 
-type IBookPageProps = {
+type BookPageProps = {
   general?: string;
-  key?: string;
+};
+
+type BookPageState = {
+  searchResults: Array<bookObject>;
+  noResult: boolean;
 };
 
 type bookObject = {
-  title?: string;
-  authors?: [string];
+  title: string;
+  authors: [string];
   date?: string;
   isbn?: string;
   pages?: string;
@@ -27,43 +31,42 @@ type bookObject = {
   error?: string;
 };
 
-interface IBookPageState {
-  searchResults: Array<bookObject>;
-  noResult: boolean;
-}
 class BookPage extends React.Component<
-  RouteComponentProps<IBookPageProps>,
-  IBookPageState
+  RouteComponentProps<BookPageProps>,
+  BookPageState
 > {
-  //You can use this example isbn
-  //9781101137192
-  constructor(props: RouteComponentProps<IBookPageProps>) {
-    super(props);
-    this.state = {
-      searchResults: [],
-      noResult: false
-    };
-  }
+  state = {
+    searchResults: [],
+    noResult: false
+  };
+
   componentDidMount() {
-    let keyword = this.props.match.params.general;
-    fetch(`https://www.googleapis.com/books/v1/volumes?q=${keyword}`)
-      .then(resp => {
-        return resp.json();
+    let searchedTerm = this.props.match.params.general;
+
+    //Replace spaces with pluses
+    if (searchedTerm) {
+      searchedTerm.replace(" ", "+");
+    }
+
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchedTerm}`)
+      .then(res => {
+        return res.json();
       })
+
       .then(data => {
-        let searchResults = data.items;
-        let bookObjects: Array<bookObject> = [];
-        if (searchResults) {
-          searchResults.map((searchResult: any) =>
-            bookObjects.push(searchResult.volumeInfo)
+        let searchResults: Array<bookObject> = [];
+
+        //Check items were returned and push them to searchResults
+        if (data.items.length) {
+          data.items.map((item: any) =>
+            //Create a function to properly desctructure API result into bookObject
+            searchResults.push(item.volumeInfo)
           );
-          return bookObjects;
+          this.setState({ noResult: false, searchResults: searchResults });
         } else {
-          this.setState({ noResult: true });
-          return bookObjects;
+          this.setState({ noResult: true, searchResults: [] });
         }
-      })
-      .then(bookObjects => this.setState({ searchResults: bookObjects }));
+      });
   }
 
   render() {
@@ -71,7 +74,7 @@ class BookPage extends React.Component<
       <React.Fragment>
         <Header />
         <Main>
-          <h1>Search keyword : {this.props.match.params.general}</h1>
+          <h1>Results for '{this.props.match.params.general}'</h1>
           {this.state.noResult ? (
             <h1>"Nothing here :( Try searching again!"</h1>
           ) : (
