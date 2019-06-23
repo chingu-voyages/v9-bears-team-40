@@ -19,6 +19,7 @@ type BookPageProps = {
 type BookPageState = {
   searchResults: Array<bookObject>;
   noResult: boolean;
+  error: any;
 };
 
 type bookObject = {
@@ -37,16 +38,12 @@ class BookPage extends React.Component<
 > {
   state = {
     searchResults: [],
-    noResult: false
+    noResult: false,
+    error: null
   };
 
-  componentDidMount() {
+  getSearchResults() {
     let searchedTerm = this.props.match.params.general;
-
-    //Replace spaces with pluses
-    if (searchedTerm) {
-      searchedTerm.replace(" ", "+");
-    }
 
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchedTerm}`)
       .then(res => {
@@ -54,19 +51,38 @@ class BookPage extends React.Component<
       })
 
       .then(data => {
+        if (data.error) {
+          this.setState({ error: data.error.message });
+          return;
+        }
+
         let searchResults: Array<bookObject> = [];
 
         //Check items were returned and push them to searchResults
-        if (data.items.length) {
+        if (data.items && data.items.length) {
           data.items.map((item: any) =>
-            //Create a function to properly desctructure API result into bookObject
+            //Todo: Create a function to properly desctructure API result into bookObject and provide proper types for both
             searchResults.push(item.volumeInfo)
           );
-          this.setState({ noResult: false, searchResults: searchResults });
+          this.setState({
+            noResult: false,
+            searchResults: searchResults,
+            error: false
+          });
         } else {
-          this.setState({ noResult: true, searchResults: [] });
+          this.setState({ noResult: true, searchResults: [], error: false });
         }
       });
+  }
+
+  componentWillMount() {
+    this.getSearchResults();
+  }
+
+  componentDidUpdate(prevProps: RouteComponentProps) {
+    if (prevProps.match.params !== this.props.match.params) {
+      this.getSearchResults();
+    }
   }
 
   render() {
@@ -74,7 +90,11 @@ class BookPage extends React.Component<
       <React.Fragment>
         <Header />
         <Main>
-          <h1>Results for '{this.props.match.params.general}'</h1>
+          <h1>
+            {this.state.error
+              ? this.state.error
+              : `Results for '${this.props.match.params.general}'`}
+          </h1>
           {this.state.noResult ? (
             <h1>"Nothing here :( Try searching again!"</h1>
           ) : (
