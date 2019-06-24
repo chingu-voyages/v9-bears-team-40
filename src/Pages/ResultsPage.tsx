@@ -31,6 +31,7 @@ type bookObject = {
   pages?: string;
   description?: string;
   error?: string;
+  imageLinks?: object;
 };
 
 class ResultPage extends React.Component<
@@ -52,6 +53,7 @@ class ResultPage extends React.Component<
       })
 
       .then(data => {
+        console.log("data", data);
         if (data.error) {
           this.setState({ error: data.error.message });
           return;
@@ -100,7 +102,13 @@ class ResultPage extends React.Component<
             <h1>Nothing here :( Try searching again!</h1>
           ) : (
             this.state.searchResults.map((ResultInfo: bookObject, key) => {
-              return <Result key={key} title={ResultInfo.title}></Result>;
+              return (
+                <Result
+                  key={key}
+                  title={ResultInfo.title}
+                  imageLinks={ResultInfo.imageLinks}
+                ></Result>
+              );
             })
           )}
         </Main>
