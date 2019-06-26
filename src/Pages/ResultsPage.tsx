@@ -103,11 +103,7 @@ class ResultPage extends React.Component<
           ) : (
             this.state.searchResults.map((ResultInfo: bookObject, key) => {
               return (
-                <Result
-                  key={key}
-                  title={ResultInfo.title}
-                  imageLinks={ResultInfo.imageLinks}
-                ></Result>
+                <Result key={key} searchResultObjects={ResultInfo}></Result>
               );
             })
           )}
