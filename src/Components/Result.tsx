@@ -80,7 +80,7 @@ const Result = (props: ResultProps) => {
   //Render a thumbnail if there is one
   let thumbnail = <DefaultThumbnail>?</DefaultThumbnail>;
   if (imageLinks && imageLinks.thumbnail) {
-    thumbnail = <img src={imageLinks.thumbnail} />;
+    thumbnail = <img src={imageLinks.thumbnail} alt={title} />;
   }
 
   console.log(title, imageLinks, industryIdentifiers);
