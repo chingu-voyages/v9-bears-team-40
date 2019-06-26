@@ -1,18 +1,18 @@
 import * as React from "react";
 import styled from "../utils/theme";
 
-const SearchResultCard = styled.div`
+const SearchResult = styled.div`
   display: flex;
   // justify-content :center;
   margin: 5px;
 `;
 
-const SearchResultDesc = styled.div`
+const Description = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-const SearchResultImg = styled.img`
+const Image = styled.img`
   margin-right: 5px;
 `;
 const Title = styled.h1`
@@ -23,6 +23,36 @@ const Author = styled.h2`
   margin: 0;
 `;
 
+const OutterStars = styled.div`
+  position: relative;
+  display: inline-block;
+  &:before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    color: #ccc;
+  }
+`;
+
+const InnerStars = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  // width:0;
+  width: ${(props: IInderStars) => props.averageRating || 0};
+  &:before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    color: #f8ce0b;
+  }
+`;
+
+interface IInderStars {
+  averageRating?: string;
+}
 function authorsArrayToString(arr: Array<string>) {
   return arr.reduce((acc, curr, idx) => {
     return idx === arr.length - 1 ? acc + " and " + curr : acc + ", " + curr;
@@ -32,14 +62,32 @@ function authorsArrayToString(arr: Array<string>) {
 //Todo: Create proper types and components for search results
 const Result = (props: any) => {
   let authors = authorsArrayToString(props.searchResultObjects.authors);
+  console.log((props.searchResultObjects.averageRating / 5) * 100 + "%" || 0);
+  console.log(props.searchResultObjects.averageRating);
+
   return (
-    <SearchResultCard>
-      <SearchResultImg src={props.imageLinks.thumbnail} alt="bookcover" />
-      <SearchResultDesc>
-        <Title>{props.title}</Title>
+    <SearchResult>
+      <Image
+        src={props.searchResultObjects.imageLinks.thumbnail}
+        alt="bookcover"
+      />
+      <Description>
+        <Title>{props.searchResultObjects.title}</Title>
         <Author>by {authors}</Author>
-      </SearchResultDesc>
-    </SearchResultCard>
+        <OutterStars>
+          {props.searchResultObjects.averageRating ? (
+            <InnerStars
+              averageRating={
+                (props.searchResultObjects.averageRating / 5) * 100 + "%"
+              }
+            />
+          ) : (
+            <InnerStars />
+          )}
+          - {props.searchResultObjects.averageRating} out of 5
+        </OutterStars>
+      </Description>
+    </SearchResult>
   );
 };
 
