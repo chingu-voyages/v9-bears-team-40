@@ -10,14 +10,19 @@ type ResultProps = {
 const Result = (props: ResultProps) => {
   console.log(props.book);
 
-  const {
+  let {
     title,
     publishedDate,
     description,
     imageLinks,
     industryIdentifiers
   } = props.book;
-  const authors = authorsArrayToString(props.book.authors);
+  const authors = authorsArrayToString(props.book.authors || []);
+
+  //Trim long descriptions
+  if (description && description.length > 500) {
+    description = description.slice(0, 497) + "...";
+  }
 
   console.log(title, imageLinks, industryIdentifiers);
 
