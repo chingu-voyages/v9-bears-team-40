@@ -1,9 +1,10 @@
 import React from "react";
-import Result from "../Components/Result";
-import Footer from "../Components/Footer";
-import Header from "../Components/Header";
 import styled from "../utils/theme";
 import { RouteComponentProps } from "react-router";
+
+import Header from "../Components/Header";
+import Footer from "../Components/Footer";
+import Result from "../Components/Result";
 
 const Main = styled.main`
   display: flex;
@@ -83,6 +84,7 @@ class ResultPage extends React.Component<
   }
 
   componentDidUpdate(prevProps: RouteComponentProps) {
+    //Update search results if the user executes another search on the results page
     if (prevProps.match.params !== this.props.match.params) {
       this.getSearchResults();
     }
@@ -99,16 +101,10 @@ class ResultPage extends React.Component<
               : `Results for '${this.props.match.params.general}'`}
           </h1>
           {this.state.noResult ? (
-            <h1>Nothing here :( Try searching again!</h1>
+            <p>Nothing here :( Try searching again!</p>
           ) : (
-            this.state.searchResults.map((ResultInfo: bookObject, key) => {
-              return (
-                <Result
-                  key={key}
-                  title={ResultInfo.title}
-                  imageLinks={ResultInfo.imageLinks}
-                ></Result>
-              );
+            this.state.searchResults.map((book: bookObject, key) => {
+              return <Result key={key} book={book} />;
             })
           )}
         </Main>
