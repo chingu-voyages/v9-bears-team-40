@@ -1,93 +1,100 @@
 import * as React from "react";
 import styled from "../utils/theme";
+import authorsArrayToString from "../utils/authorsArrayToString";
 
-const SearchResult = styled.div`
+const Wrapper = styled.div`
   display: flex;
-  // justify-content :center;
-  margin: 5px;
+  margin: 1.5rem 0;
 `;
 
-const Description = styled.div`
+const BookInfo = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const Image = styled.img`
-  margin-right: 5px;
-`;
-const Title = styled.h1`
-  margin: 0;
-`;
-
-const Author = styled.h2`
-  margin: 0;
-`;
-
-const OutterStars = styled.div`
-  position: relative;
-  display: inline-block;
-  &:before {
-    content: "\f005 \f005 \f005 \f005 \f005";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    color: #ccc;
+  margin: 0 0.75rem;
+  * {
+    margin: 0;
   }
 `;
 
-const InnerStars = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  // width:0;
-  width: ${(props: IInderStars) => props.averageRating || 0};
-  &:before {
-    content: "\f005 \f005 \f005 \f005 \f005";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    color: #f8ce0b;
-  }
+const BookDescription = styled.summary`
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
 `;
 
-interface IInderStars {
-  averageRating?: string;
-}
-function authorsArrayToString(arr: Array<string>) {
-  return arr.reduce((acc, curr, idx) => {
-    return idx === arr.length - 1 ? acc + " and " + curr : acc + ", " + curr;
-  }, arr.shift());
-}
+const DefaultThumbnail = styled.div`
+  background-color: ${props => props.theme.colors.fg};
+  color: ${props => props.theme.colors.bg};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: ${props => props.theme.fonts.heading};
+  font-size: 3rem;
+  line-height: 3rem;
+  height: 190px;
+  width: 128px;
+`;
 
-//Todo: Create proper types and components for search results
-const Result = (props: any) => {
-  let authors = authorsArrayToString(props.searchResultObjects.authors);
-  console.log((props.searchResultObjects.averageRating / 5) * 100 + "%" || 0);
-  console.log(props.searchResultObjects.averageRating);
+const ThumbnailWrapper = styled.div`
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 0;
+`;
+
+type ResultProps = {
+  book: {
+    title: string;
+    authors?: Array<string>;
+    publishedDate?: string;
+    description?: string;
+    imageLinks?: {
+      thumbnail?: string;
+      smallThumbnail?: string;
+    };
+    industryIdentifiers?: [
+      {
+        type: string;
+        identifier: string;
+      }
+    ];
+  };
+};
+
+const Result = (props: ResultProps) => {
+  console.log(props.book);
+  //Destructure book into variables
+  let {
+    title,
+    publishedDate,
+    description,
+    imageLinks,
+    industryIdentifiers
+  } = props.book;
+  const authors = authorsArrayToString(props.book.authors || []);
+
+  //Trim long descriptions
+  if (description && description.length > 500) {
+    description = description.slice(0, 497) + "...";
+  }
+
+  //Render a thumbnail if there is one
+  let thumbnail = <DefaultThumbnail>?</DefaultThumbnail>;
+  if (imageLinks && imageLinks.thumbnail) {
+    thumbnail = <img src={imageLinks.thumbnail} alt={title} />;
+  }
+
+  console.log(title, imageLinks, industryIdentifiers);
 
   return (
-    <SearchResult>
-      <Image
-        src={props.searchResultObjects.imageLinks.thumbnail}
-        alt="bookcover"
-      />
-      <Description>
-        <Title>{props.searchResultObjects.title}</Title>
-        <Author>by {authors}</Author>
-        <OutterStars>
-          {props.searchResultObjects.averageRating ? (
-            <InnerStars
-              averageRating={
-                (props.searchResultObjects.averageRating / 5) * 100 + "%"
-              }
-            />
-          ) : (
-            <InnerStars />
-          )}
-          - {props.searchResultObjects.averageRating} out of 5
-        </OutterStars>
-      </Description>
-    </SearchResult>
+    <Wrapper>
+      <ThumbnailWrapper>{thumbnail}</ThumbnailWrapper>
+      <BookInfo>
+        <h2>{title}</h2>
+        <p>{authors}</p>
+        <p>{publishedDate}</p>
+        {description ? <BookDescription>{description}</BookDescription> : null}
+      </BookInfo>
+    </Wrapper>
   );
 };
 
