@@ -107,6 +107,7 @@ class ResultPage extends React.Component<
                   key={key}
                   title={ResultInfo.title}
                   imageLinks={ResultInfo.imageLinks}
+                  searchResultObjects={ResultInfo}
                 ></Result>
               );
             })
