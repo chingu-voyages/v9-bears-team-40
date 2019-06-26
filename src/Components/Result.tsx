@@ -2,14 +2,67 @@ import * as React from "react";
 import styled from "../utils/theme";
 import authorsArrayToString from "../utils/authorsArrayToString";
 
+const Wrapper = styled.div`
+  display: flex;
+  margin: 1.5rem 0;
+`;
+
+const BookInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 0.75rem;
+  * {
+    margin: 0;
+  }
+`;
+
+const BookDescription = styled.summary`
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+`;
+
+const DefaultThumbnail = styled.div`
+  background-color: ${props => props.theme.colors.fg};
+  color: ${props => props.theme.colors.bg};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: ${props => props.theme.fonts.heading};
+  font-size: 3rem;
+  line-height: 3rem;
+  height: 190px;
+  width: 128px;
+`;
+
+const ThumbnailWrapper = styled.div`
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 0;
+`;
+
 type ResultProps = {
-  book: any;
+  book: {
+    title: string;
+    authors?: Array<string>;
+    publishedDate?: string;
+    description?: string;
+    imageLinks?: {
+      thumbnail?: string;
+      smallThumbnail?: string;
+    };
+    industryIdentifiers?: [
+      {
+        type: string;
+        identifier: string;
+      }
+    ];
+  };
 };
 
-//Todo: Create proper types and components for search results
 const Result = (props: ResultProps) => {
   console.log(props.book);
-
+  //Destructure book into variables
   let {
     title,
     publishedDate,
@@ -25,8 +78,7 @@ const Result = (props: ResultProps) => {
   }
 
   //Render a thumbnail if there is one
-  //Todo: replace with default thumbnail component like this --> [?]
-  let thumbnail = null;
+  let thumbnail = <DefaultThumbnail>?</DefaultThumbnail>;
   if (imageLinks && imageLinks.thumbnail) {
     thumbnail = <img src={imageLinks.thumbnail} />;
   }
@@ -34,13 +86,15 @@ const Result = (props: ResultProps) => {
   console.log(title, imageLinks, industryIdentifiers);
 
   return (
-    <div>
-      <h2>{title}</h2>
-      <p>{authors}</p>
-      <p>{publishedDate}</p>
-      {thumbnail}
-      <p>{description}</p>
-    </div>
+    <Wrapper>
+      <ThumbnailWrapper>{thumbnail}</ThumbnailWrapper>
+      <BookInfo>
+        <h2>{title}</h2>
+        <p>{authors}</p>
+        <p>{publishedDate}</p>
+        {description ? <BookDescription>{description}</BookDescription> : null}
+      </BookInfo>
+    </Wrapper>
   );
 };
 
