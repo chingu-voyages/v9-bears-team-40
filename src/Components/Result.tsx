@@ -24,6 +24,13 @@ const Result = (props: ResultProps) => {
     description = description.slice(0, 497) + "...";
   }
 
+  //Render a thumbnail if there is one
+  //Todo: replace with default thumbnail component like this --> [?]
+  let thumbnail = null;
+  if (imageLinks && imageLinks.thumbnail) {
+    thumbnail = <img src={imageLinks.thumbnail} />;
+  }
+
   console.log(title, imageLinks, industryIdentifiers);
 
   return (
@@ -31,6 +38,7 @@ const Result = (props: ResultProps) => {
       <h2>{title}</h2>
       <p>{authors}</p>
       <p>{publishedDate}</p>
+      {thumbnail}
       <p>{description}</p>
     </div>
   );
