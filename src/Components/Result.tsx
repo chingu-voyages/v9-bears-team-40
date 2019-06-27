@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "../utils/theme";
 import authorsArrayToString from "../utils/authorsArrayToString";
+import Stars from "./Stars";
 
 const Wrapper = styled.div`
   display: flex;
@@ -57,6 +58,7 @@ type ResultProps = {
         identifier: string;
       }
     ];
+    averageRating?: string;
   };
 };
 
@@ -68,7 +70,8 @@ const Result = (props: ResultProps) => {
     publishedDate,
     description,
     imageLinks,
-    industryIdentifiers
+    industryIdentifiers,
+    averageRating
   } = props.book;
   const authors = authorsArrayToString(props.book.authors || []);
 
@@ -93,6 +96,7 @@ const Result = (props: ResultProps) => {
         <p>{authors}</p>
         <p>{publishedDate}</p>
         {description ? <BookDescription>{description}</BookDescription> : null}
+        {averageRating ? <Stars averageRating={averageRating} /> : null}
       </BookInfo>
     </Wrapper>
   );
