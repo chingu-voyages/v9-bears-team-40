@@ -71,6 +71,7 @@ class BookPage extends React.Component<
   }
 
   componentWillMount() {
+    //If no book object is passed from the previous route, fetch the book by isbn
     if (!this.props.match.params.bookPassed) {
       this.getBookByIsbn(this.props.match.params.isbn);
     }
@@ -82,6 +83,7 @@ class BookPage extends React.Component<
         <Header />
         <Main>
           <h1>
+            {/*Make this less ugly later!*/}
             {this.state.loading
               ? `Looking for ISBN ${this.props.match.params.isbn}...`
               : this.state.error
@@ -90,7 +92,6 @@ class BookPage extends React.Component<
               ? this.state.book.volumeInfo.title
               : "u suck lol"}
           </h1>
-          <p></p>
         </Main>
         <Footer />
       </React.Fragment>
