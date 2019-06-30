@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./Modal.css";
+import styled from "../utils/theme";
 
 const modalRoot = document.getElementById("modal-root");
 
-class Modal extends React.Component {
+class Portal extends React.Component {
   el: HTMLDivElement;
   constructor(props: any) {
     super(props);
@@ -27,3 +27,9 @@ class Modal extends React.Component {
     return ReactDOM.createPortal(this.props.children, this.el);
   }
 }
+
+const Modal = styled(Portal)`
+  position: relative;
+  z-index: 999;
+`;
+export default Modal;

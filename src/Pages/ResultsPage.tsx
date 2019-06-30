@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "../utils/theme";
 import { RouteComponentProps } from "react-router";
-
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import Result from "../Components/Result";
+
+import Child from "../Components/Child";
+import Modal from "../Components/Modal";
 
 const Main = styled.main`
   display: flex;
@@ -100,6 +102,9 @@ class ResultPage extends React.Component<
               ? this.state.error
               : `Results for '${this.props.match.params.general}'`}
           </h1>
+          <Modal>
+            <Child />
+          </Modal>
           {this.state.noResult ? (
             <p>Nothing here :( Try searching again!</p>
           ) : (
