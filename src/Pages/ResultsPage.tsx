@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "../utils/theme";
 import { RouteComponentProps } from "react-router";
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
 import Result from "../Components/Result";
 
 import Child from "../Components/Child";
@@ -95,7 +93,6 @@ class ResultPage extends React.Component<
   render() {
     return (
       <React.Fragment>
-        <Header />
         <Main>
           <h1>
             {this.state.error
@@ -113,7 +110,6 @@ class ResultPage extends React.Component<
             })
           )}
         </Main>
-        <Footer />
       </React.Fragment>
     );
   }
