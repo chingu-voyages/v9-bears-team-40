@@ -2,6 +2,8 @@ import React from "react";
 import styled from "../utils/theme";
 import { RouteComponentProps } from "react-router";
 
+import googleBooksVolume from "../types/googleBooksVolume";
+
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 
@@ -12,13 +14,13 @@ const Main = styled.main`
   padding: 3rem;
 `;
 
-type BookPageProps = {
-  bookPassed?: any;
+interface BookPageProps {
+  bookPassed?: googleBooksVolume;
   isbn: string;
-};
+}
 
 type BookPageState = {
-  book: any;
+  book: googleBooksVolume | null;
   error: string | null;
   loading: boolean;
 };
@@ -27,13 +29,8 @@ class BookPage extends React.Component<
   RouteComponentProps<BookPageProps>,
   BookPageState
 > {
-  state = {
-    book: {
-      volumeInfo: {
-        title: null,
-        authors: []
-      }
-    },
+  state: BookPageState = {
+    book: null,
     error: null,
     loading: true
   };
@@ -56,13 +53,13 @@ class BookPage extends React.Component<
         //Check items were returned and push them to searchBooks
         if (data.items && data.items.length) {
           this.setState({
-            book: data.items[0],
+            book: data.items[0] as googleBooksVolume,
             error: null,
             loading: false
           });
         } else {
           this.setState({
-            book: {},
+            book: null,
             error: "Couldn't find the book you're looking for. Sorry! :(",
             loading: false
           });
@@ -74,10 +71,16 @@ class BookPage extends React.Component<
     //If no book object is passed from the previous route, fetch the book by isbn
     if (!this.props.match.params.bookPassed) {
       this.getBookByIsbn(this.props.match.params.isbn);
+    } else {
+      this.setState({
+        book: this.props.match.params.bookPassed
+      });
     }
   }
 
   render() {
+    console.log(this.state.book);
+
     return (
       <React.Fragment>
         <Header />
@@ -88,7 +91,7 @@ class BookPage extends React.Component<
               ? `Looking for ISBN ${this.props.match.params.isbn}...`
               : this.state.error
               ? `Error: ${this.state.error}`
-              : this.state.book.volumeInfo
+              : this.state.book
               ? this.state.book.volumeInfo.title
               : "u suck lol"}
           </h1>
