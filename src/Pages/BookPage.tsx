@@ -6,6 +6,7 @@ import googleBooksVolume from "../types/googleBooksVolume";
 
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
+import BookDetails from "../Components/BookDetails";
 
 const Main = styled.main`
   display: flex;
@@ -86,7 +87,7 @@ class BookPage extends React.Component<
     if (this.state.loading) {
       children = <h1>Looking for ISBN {this.props.match.params.isbn}...</h1>;
     } else if (this.state.book) {
-      children = <h1>{this.state.book.volumeInfo.title}</h1>;
+      children = <BookDetails book={this.state.book} />;
     } else {
       children = [
         <h1>Error</h1>,
