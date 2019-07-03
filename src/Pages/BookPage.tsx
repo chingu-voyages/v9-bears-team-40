@@ -81,20 +81,22 @@ class BookPage extends React.Component<
   render() {
     console.log(this.state.book);
 
+    let children = null;
+
+    if (this.state.loading) {
+      children = <h1>Looking for ISBN {this.props.match.params.isbn}...</h1>;
+    } else if (this.state.book) {
+      children = <h1>{this.state.book.volumeInfo.title}</h1>;
+    } else {
+      children = [
+        <h1>Error</h1>,
+        <p>{this.state.error || "Error retrieving results."}</p>
+      ];
+    }
+
     return (
       <React.Fragment>
-        <Main>
-          <h1>
-            {/*Make this less ugly later!*/}
-            {this.state.loading
-              ? `Looking for ISBN ${this.props.match.params.isbn}...`
-              : this.state.error
-              ? `Error: ${this.state.error}`
-              : this.state.book
-              ? this.state.book.volumeInfo.title
-              : "u suck lol"}
-          </h1>
-        </Main>
+        <Main>{children}</Main>
         <Footer />
       </React.Fragment>
     );
