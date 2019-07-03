@@ -83,7 +83,6 @@ class BookPage extends React.Component<
 
     return (
       <React.Fragment>
-        <Header />
         <Main>
           <h1>
             {/*Make this less ugly later!*/}

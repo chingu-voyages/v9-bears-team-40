@@ -5,8 +5,11 @@ A book-finding app created for Chingu's voyage-9 project.
 ## src Structure
 
 ├── Components # For storing single React components
+
 ├── Pages # Containers which represent views/screens of the app
+
 ├── routes # Routes for each Page
+
 └── utils # Helper functions, etc which can be used across pages
 
 ## Development

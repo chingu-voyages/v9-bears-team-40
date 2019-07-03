@@ -1,9 +1,6 @@
 import * as React from "react";
 import styled from "../utils/theme";
 
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
-
 const Main = styled.main`
   display: flex;
   flex-direction: column;
@@ -16,7 +13,6 @@ type HomeProps = {};
 const Home: React.FunctionComponent<HomeProps> = props => {
   return (
     <React.Fragment>
-      <Header />
       <Main>
         <h1>Home</h1>
         <p>
@@ -24,7 +20,6 @@ const Home: React.FunctionComponent<HomeProps> = props => {
           maybe no footer?) so that the search is presented clearly.
         </p>
       </Main>
-      <Footer />
     </React.Fragment>
   );
 };
