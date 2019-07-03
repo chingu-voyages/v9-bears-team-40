@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "../utils/theme";
 import authorsArrayToString from "../utils/authorsArrayToString";
 import Stars from "./Stars";
+import googleBooksVolume from "../types/googleBooksVolume";
 
 const Wrapper = styled.div`
   display: flex;
@@ -43,23 +44,7 @@ const ThumbnailWrapper = styled.div`
 `;
 
 type ResultProps = {
-  book: {
-    title: string;
-    authors?: Array<string>;
-    publishedDate?: string;
-    description?: string;
-    imageLinks?: {
-      thumbnail?: string;
-      smallThumbnail?: string;
-    };
-    industryIdentifiers?: [
-      {
-        type: string;
-        identifier: string;
-      }
-    ];
-    averageRating?: string;
-  };
+  book: googleBooksVolume;
 };
 
 const Result = (props: ResultProps) => {
@@ -67,13 +52,14 @@ const Result = (props: ResultProps) => {
   //Destructure book into variables
   let {
     title,
+    authors,
     publishedDate,
     description,
     imageLinks,
     industryIdentifiers,
     averageRating
-  } = props.book;
-  const authors = authorsArrayToString(props.book.authors || []);
+  } = props.book.volumeInfo;
+  const formattedAuthors = authorsArrayToString(authors || []);
 
   //Trim long descriptions
   if (description && description.length > 500) {
@@ -93,10 +79,12 @@ const Result = (props: ResultProps) => {
       <ThumbnailWrapper>{thumbnail}</ThumbnailWrapper>
       <BookInfo>
         <h2>{title}</h2>
-        <p>{authors}</p>
+        <p>{formattedAuthors}</p>
         <p>{publishedDate}</p>
         {description ? <BookDescription>{description}</BookDescription> : null}
-        {averageRating ? <Stars averageRating={averageRating} /> : null}
+        {averageRating ? (
+          <Stars averageRating={averageRating.toString()} />
+        ) : null}
       </BookInfo>
     </Wrapper>
   );

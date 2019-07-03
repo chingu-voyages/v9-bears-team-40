@@ -2,6 +2,7 @@ type googleBooksVolume = {
   volumeInfo: {
     title: string;
     authors?: Array<string>;
+    description?: string;
     imageLinks?: {
       smallThumbnail?: string;
       thumbnail?: string;
