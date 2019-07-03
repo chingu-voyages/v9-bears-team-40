@@ -1,6 +1,10 @@
 import * as React from "react";
 import styled from "../utils/theme";
+
 import authorsArrayToString from "../utils/authorsArrayToString";
+import googleBooksVolume from "../types/googleBooksVolume";
+
+import { Link } from "react-router-dom";
 import Stars from "./Stars";
 
 const Wrapper = styled.div`
@@ -43,37 +47,21 @@ const ThumbnailWrapper = styled.div`
 `;
 
 type ResultProps = {
-  book: {
-    title: string;
-    authors?: Array<string>;
-    publishedDate?: string;
-    description?: string;
-    imageLinks?: {
-      thumbnail?: string;
-      smallThumbnail?: string;
-    };
-    industryIdentifiers?: [
-      {
-        type: string;
-        identifier: string;
-      }
-    ];
-    averageRating?: string;
-  };
+  book: googleBooksVolume;
 };
 
 const Result = (props: ResultProps) => {
-  console.log(props.book);
   //Destructure book into variables
   let {
     title,
+    authors,
     publishedDate,
     description,
     imageLinks,
     industryIdentifiers,
     averageRating
-  } = props.book;
-  const authors = authorsArrayToString(props.book.authors || []);
+  } = props.book.volumeInfo;
+  const formattedAuthors = authorsArrayToString(authors || []);
 
   //Trim long descriptions
   if (description && description.length > 500) {
@@ -92,11 +80,21 @@ const Result = (props: ResultProps) => {
     <Wrapper>
       <ThumbnailWrapper>{thumbnail}</ThumbnailWrapper>
       <BookInfo>
-        <h2>{title}</h2>
-        <p>{authors}</p>
+        <h2>
+          <Link
+            to={`/b/${
+              props.book.volumeInfo.industryIdentifiers![0].identifier
+            }`}
+          >
+            {title}
+          </Link>
+        </h2>
+        <p>{formattedAuthors}</p>
         <p>{publishedDate}</p>
         {description ? <BookDescription>{description}</BookDescription> : null}
-        {averageRating ? <Stars averageRating={averageRating} /> : null}
+        {averageRating ? (
+          <Stars averageRating={averageRating.toString()} />
+        ) : null}
       </BookInfo>
     </Wrapper>
   );

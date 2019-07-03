@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "../utils/theme";
 import { RouteComponentProps } from "react-router";
-import Result from "../Components/Result";
 
+import Result from "../Components/Result";
 import Child from "../Components/Child";
 import Modal from "../Components/Modal";
+import googleBooksVolume from "../types/googleBooksVolume";
 
 const Main = styled.main`
   display: flex;
@@ -18,21 +19,9 @@ type ResultPageProps = {
 };
 
 type ResultPageState = {
-  searchResults: Array<bookObject>;
+  searchResults: Array<googleBooksVolume>;
   noResult: boolean;
   error: string | null;
-};
-
-//Todo: extract this type to an importable file (for use in /b/ routes)
-type bookObject = {
-  title: string;
-  authors: [string];
-  date?: string;
-  isbn?: string;
-  pages?: string;
-  description?: string;
-  error?: string;
-  imageLinks?: object;
 };
 
 class ResultPage extends React.Component<
@@ -60,13 +49,13 @@ class ResultPage extends React.Component<
           return;
         }
 
-        let searchResults: Array<bookObject> = [];
+        let searchResults: Array<googleBooksVolume> = [];
 
         //Check items were returned and push them to searchResults
         if (data.items && data.items.length) {
-          data.items.map((item: any) =>
+          data.items.map((item: googleBooksVolume) =>
             //Todo: Create a function to properly desctructure API result into ResultObject and provide proper types for both
-            searchResults.push(item.volumeInfo)
+            searchResults.push(item)
           );
           this.setState({
             noResult: false,
@@ -105,7 +94,7 @@ class ResultPage extends React.Component<
           {this.state.noResult ? (
             <p>Nothing here :( Try searching again!</p>
           ) : (
-            this.state.searchResults.map((book: bookObject, key) => {
+            this.state.searchResults.map((book: googleBooksVolume, key) => {
               return <Result key={key} book={book} />;
             })
           )}
