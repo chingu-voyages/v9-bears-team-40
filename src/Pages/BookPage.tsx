@@ -14,10 +14,10 @@ const Main = styled.main`
   padding: 3rem;
 `;
 
-interface BookPageProps {
-  bookPassed?: googleBooksVolume;
+type BookPageProps = {
+  bookPassed?: any;
   isbn: string;
-}
+};
 
 type BookPageState = {
   book: googleBooksVolume | null;
