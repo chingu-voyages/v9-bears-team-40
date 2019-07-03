@@ -1,7 +1,19 @@
 type googleBooksVolume = {
   volumeInfo: {
     title: string;
-    authors?: string[];
+    authors?: Array<string>;
+    imageLinks?: {
+      smallThumbnail?: string;
+      thumbnail?: string;
+    };
+    industryIdentifiers?: Array<{
+      type: string;
+      identifier: string;
+    }>;
+    pageCount?: number;
+    publishedDate?: string;
+    averageRating: number;
+    ratingsCount: number;
   };
 };
 
