@@ -4,7 +4,6 @@ import { RouteComponentProps } from "react-router";
 
 import googleBooksVolume from "../types/googleBooksVolume";
 
-import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import BookDetails from "../Components/BookDetails";
 
