@@ -50,7 +50,7 @@ type ResultProps = {
   book: googleBooksVolume;
 };
 
-const Result = (props: ResultProps) => {
+const Result: React.FunctionComponent<ResultProps> = props => {
   //Destructure book into variables
   let {
     title,
@@ -58,9 +58,9 @@ const Result = (props: ResultProps) => {
     publishedDate,
     description,
     imageLinks,
-    industryIdentifiers,
     averageRating
   } = props.book.volumeInfo;
+
   const formattedAuthors = authorsArrayToString(authors || []);
 
   //Trim long descriptions
@@ -74,17 +74,18 @@ const Result = (props: ResultProps) => {
     thumbnail = <img src={imageLinks.thumbnail} alt={title} />;
   }
 
-  console.log(title, imageLinks, industryIdentifiers);
-
   return (
     <Wrapper>
       <ThumbnailWrapper>{thumbnail}</ThumbnailWrapper>
       <BookInfo>
         <h2>
           <Link
-            to={`/b/${
-              props.book.volumeInfo.industryIdentifiers![0].identifier
-            }`}
+            to={{
+              pathname: `/b/${props.book.id}`,
+              state: {
+                book: props.book
+              }
+            }}
           >
             {title}
           </Link>

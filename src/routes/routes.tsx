@@ -6,10 +6,6 @@ import ResultsPage from "../Pages/ResultsPage";
 import BookPage from "../Pages/BookPage";
 import Header from "../Components/Header";
 
-interface IKey {
-  key: string;
-}
-
 //going to add a state for header component.
 //header component is going to receive props from here to see if user is logged in or not
 class Routes extends React.Component<{}, {}> {
@@ -26,9 +22,8 @@ class Routes extends React.Component<{}, {}> {
           render={props => <ResultsPage {...props} />}
         />
 
-        {/*Display one book by ISBN
-        <BookPage {...props} />}*/}
-        <Route path="/b/:isbn" render={props => <BookPage {...props} />} />
+        {/*Display one book by ISBN*/}
+        <Route path="/b/:googleId" render={props => <BookPage {...props} />} />
       </React.Fragment>
     );
   }
