@@ -3,8 +3,6 @@ import styled from "../utils/theme";
 import { RouteComponentProps } from "react-router";
 
 import Result from "../Components/Result";
-import Child from "../Components/Child";
-import Modal from "../Components/Modal";
 import googleBooksVolume from "../types/googleBooksVolume";
 
 const Main = styled.main`
@@ -88,9 +86,6 @@ class ResultPage extends React.Component<
               ? this.state.error
               : `Results for '${this.props.match.params.general}'`}
           </h1>
-          <Modal>
-            <Child />
-          </Modal>
           {this.state.noResult ? (
             <p>Nothing here :( Try searching again!</p>
           ) : (

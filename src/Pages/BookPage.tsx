@@ -16,7 +16,7 @@ const Main = styled.main`
 
 type BookPageProps = {
   bookPassed?: any;
-  isbn: string;
+  googleId: string;
 };
 
 type BookPageState = {
@@ -35,8 +35,8 @@ class BookPage extends React.Component<
     loading: true
   };
 
-  getBookByIsbn(isbn: string) {
-    const url = `https://www.googleapis.com/books/v1/volumes?q=${isbn}`;
+  getBookByGoogleId(googleId: string) {
+    const url = `https://www.googleapis.com/books/v1/volumes/${googleId}`;
 
     fetch(url)
       .then(res => {
@@ -44,16 +44,16 @@ class BookPage extends React.Component<
       })
 
       .then(data => {
-        console.log("data from isbn search:", data);
+        console.log("data from volume search:", data);
         if (data.error) {
           this.setState({ error: data.error.message, loading: false });
           return;
         }
 
         //Check items were returned and push them to searchBooks
-        if (data.items && data.items.length) {
+        if (data && data.id) {
           this.setState({
-            book: data.items[0] as googleBooksVolume,
+            book: data as googleBooksVolume,
             error: null,
             loading: false
           });
@@ -69,12 +69,17 @@ class BookPage extends React.Component<
 
   componentWillMount() {
     //If no book object is passed from the previous route, fetch the book by isbn
-    if (!this.props.match.params.bookPassed) {
-      this.getBookByIsbn(this.props.match.params.isbn);
-    } else {
+    if (
+      this.props.location &&
+      this.props.location.state &&
+      this.props.location.state.book
+    ) {
       this.setState({
-        book: this.props.match.params.bookPassed
+        book: this.props.location.state.book,
+        loading: false
       });
+    } else {
+      this.getBookByGoogleId(this.props.match.params.googleId);
     }
   }
 
@@ -84,8 +89,10 @@ class BookPage extends React.Component<
     let children = null;
 
     if (this.state.loading) {
-      children = <h1>Looking for ISBN {this.props.match.params.isbn}...</h1>;
-    } else if (this.state.book) {
+      children = (
+        <h1>Looking for ISBN {this.props.match.params.googleId}...</h1>
+      );
+    } else if (this.state.book && !this.state.loading) {
       children = <BookDetails book={this.state.book} />;
     } else {
       children = [
