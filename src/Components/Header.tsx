@@ -36,7 +36,7 @@ const Header: React.FunctionComponent<HeaderProps> = props => {
       {props.IsLoggedIn ? (
         <LogIn toggleModal={props.toggleModal} />
       ) : (
-        <LogOut />
+        <LogOut toggleModal={props.toggleModal} />
       )}
     </Wrapper>
   );

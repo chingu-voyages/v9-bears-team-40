@@ -8,7 +8,7 @@ const LogIn = (props: IAccountProps) => {
   return <button>click!</button>;
 };
 
-const LogOut = () => {
+const LogOut = (props: IAccountProps) => {
   return <button>click!</button>;
 };
 
