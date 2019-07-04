@@ -2,9 +2,15 @@ import * as React from "react";
 import styled from "../utils/theme";
 
 import SearchBar from "./SearchBar";
+import { LogIn, LogOut } from "./Auth";
 
 //Prop types
-type HeaderProps = {};
+type HeaderProps = {
+  IsLoggedIn?: boolean;
+  toggleModal?: boolean;
+};
+
+type HeaderStates = {};
 
 //Example styled component
 const Wrapper = styled.header`
@@ -27,7 +33,11 @@ const Header: React.FunctionComponent<HeaderProps> = props => {
     <Wrapper>
       <h1>Chapterly</h1>
       <SearchBar />
-      <button>Login</button>
+      {props.IsLoggedIn ? (
+        <LogIn toggleModal={props.toggleModal} />
+      ) : (
+        <LogOut />
+      )}
     </Wrapper>
   );
 };
