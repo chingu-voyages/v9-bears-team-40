@@ -69,12 +69,17 @@ class BookPage extends React.Component<
 
   componentWillMount() {
     //If no book object is passed from the previous route, fetch the book by isbn
-    if (!this.state.book) {
-      this.getBookByGoogleId(this.props.match.params.googleId);
-    } else {
+    if (
+      this.props.location &&
+      this.props.location.state &&
+      this.props.location.state.book
+    ) {
       this.setState({
-        book: this.props.location.state.book
+        book: this.props.location.state.book,
+        loading: false
       });
+    } else {
+      this.getBookByGoogleId(this.props.match.params.googleId);
     }
   }
 
