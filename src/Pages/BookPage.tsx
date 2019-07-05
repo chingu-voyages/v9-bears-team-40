@@ -5,7 +5,7 @@ import { RouteComponentProps } from "react-router";
 import googleBooksVolume from "../types/googleBooksVolume";
 
 import Footer from "../Components/Footer";
-import BookDetails from "../Components/BookDetails";
+import BookDetails from "../Components/Book/Book";
 
 const Main = styled.main`
   display: flex;

@@ -5,6 +5,7 @@ import authorsArrayToString from "../utils/authorsArrayToString";
 import googleBooksVolume from "../types/googleBooksVolume";
 
 import { Link } from "react-router-dom";
+import DefaultThumbnail from "./DefaultThumbnail";
 import Stars from "./Stars";
 
 const Wrapper = styled.div`
@@ -24,19 +25,6 @@ const BookInfo = styled.div`
 const BookDescription = styled.summary`
   margin-top: 0.75rem;
   font-size: 0.9rem;
-`;
-
-const DefaultThumbnail = styled.div`
-  background-color: ${props => props.theme.colors.fg};
-  color: ${props => props.theme.colors.bg};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: ${props => props.theme.fonts.heading};
-  font-size: 3rem;
-  line-height: 3rem;
-  height: 190px;
-  width: 128px;
 `;
 
 const ThumbnailWrapper = styled.div`
@@ -69,7 +57,7 @@ const Result: React.FunctionComponent<ResultProps> = props => {
   }
 
   //Render a thumbnail if there is one
-  let thumbnail = <DefaultThumbnail>?</DefaultThumbnail>;
+  let thumbnail = <DefaultThumbnail />;
   if (imageLinks && imageLinks.thumbnail) {
     thumbnail = <img src={imageLinks.thumbnail} alt={title} />;
   }

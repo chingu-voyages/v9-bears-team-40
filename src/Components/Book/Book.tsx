@@ -1,8 +1,9 @@
 import * as React from "react";
-import styled from "../utils/theme";
-import googleBooksVolume from "../types/googleBooksVolume";
-import authorsArrayToString from "../utils/authorsArrayToString";
-import Stars from "./Stars";
+import styled from "../../utils/theme";
+import googleBooksVolume from "../../types/googleBooksVolume";
+import authorsArrayToString from "../../utils/authorsArrayToString";
+import Stars from "../Stars";
+import DefaultThumbnail from "../DefaultThumbnail";
 
 type BookDetailsProps = {
   book: googleBooksVolume;
@@ -47,7 +48,9 @@ const BookDetails: React.FunctionComponent<BookDetailsProps> = props => {
       <span>{pageCount ? pageCount + " pages" : null}</span>
       {imageLinks && imageLinks.thumbnail ? (
         <Thumnbnail src={imageLinks.thumbnail} />
-      ) : null}
+      ) : (
+        <DefaultThumbnail />
+      )}
       {industryIdentifiers ? (
         <span>
           {industryIdentifiers[0].type}: {industryIdentifiers[0].identifier}
