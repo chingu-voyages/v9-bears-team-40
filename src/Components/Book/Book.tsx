@@ -2,10 +2,10 @@ import * as React from "react";
 import styled from "../../utils/theme";
 
 import googleBooksVolume from "../../types/googleBooksVolume";
-import authorsArrayToString from "../../utils/authorsArrayToString";
 
 import DefaultThumbnail from "../DefaultThumbnail";
 import Details from "./Details";
+import Info from "./Info";
 
 type BookDetailsProps = {
   book: googleBooksVolume;
@@ -38,11 +38,7 @@ const BookDetails: React.FunctionComponent<BookDetailsProps> = props => {
 
   return (
     <Wrapper>
-      <h1>{title}</h1>
-
-      {authors ? <h2>{authorsArrayToString(authors)}</h2> : ""}
-
-      <span>{publishedDate ? publishedDate.slice(0, 4) : null}</span>
+      <Info title={title} authors={authors} publishedDate={publishedDate} />
 
       {imageLinks && imageLinks.thumbnail ? (
         <Thumnbnail src={imageLinks.thumbnail} />
