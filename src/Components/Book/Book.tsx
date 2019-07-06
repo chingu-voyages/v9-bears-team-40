@@ -1,9 +1,11 @@
 import * as React from "react";
 import styled from "../../utils/theme";
+
 import googleBooksVolume from "../../types/googleBooksVolume";
 import authorsArrayToString from "../../utils/authorsArrayToString";
-import Stars from "../Stars";
+
 import DefaultThumbnail from "../DefaultThumbnail";
+import Details from "./Details";
 
 type BookDetailsProps = {
   book: googleBooksVolume;
@@ -37,24 +39,26 @@ const BookDetails: React.FunctionComponent<BookDetailsProps> = props => {
   return (
     <Wrapper>
       <h1>{title}</h1>
+
       {authors ? <h2>{authorsArrayToString(authors)}</h2> : ""}
-      {averageRating && ratingsCount ? (
-        <React.Fragment>
-          <Stars averageRating={averageRating.toString()} />{" "}
-          <span>({ratingsCount})</span>
-        </React.Fragment>
-      ) : null}
+
       <span>{publishedDate ? publishedDate.slice(0, 4) : null}</span>
-      <span>{pageCount ? pageCount + " pages" : null}</span>
+
       {imageLinks && imageLinks.thumbnail ? (
         <Thumnbnail src={imageLinks.thumbnail} />
       ) : (
         <DefaultThumbnail />
       )}
-      {industryIdentifiers ? (
-        <span>
-          {industryIdentifiers[0].type}: {industryIdentifiers[0].identifier}
-        </span>
+
+      {industryIdentifiers || pageCount || averageRating ? (
+        <Details
+          googleReviews={{
+            score: averageRating,
+            number: ratingsCount
+          }}
+          identifiers={industryIdentifiers}
+          pageCount={pageCount}
+        />
       ) : null}
     </Wrapper>
   );
