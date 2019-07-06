@@ -1,6 +1,10 @@
 import * as React from "react";
 import styled from "../utils/theme";
+
 import authorsArrayToString from "../utils/authorsArrayToString";
+import googleBooksVolume from "../types/googleBooksVolume";
+
+import { Link } from "react-router-dom";
 import Stars from "./Stars";
 
 const Wrapper = styled.div`
@@ -43,37 +47,21 @@ const ThumbnailWrapper = styled.div`
 `;
 
 type ResultProps = {
-  book: {
-    title: string;
-    authors?: Array<string>;
-    publishedDate?: string;
-    description?: string;
-    imageLinks?: {
-      thumbnail?: string;
-      smallThumbnail?: string;
-    };
-    industryIdentifiers?: [
-      {
-        type: string;
-        identifier: string;
-      }
-    ];
-    averageRating?: string;
-  };
+  book: googleBooksVolume;
 };
 
-const Result = (props: ResultProps) => {
-  console.log(props.book);
+const Result: React.FunctionComponent<ResultProps> = props => {
   //Destructure book into variables
   let {
     title,
+    authors,
     publishedDate,
     description,
     imageLinks,
-    industryIdentifiers,
     averageRating
-  } = props.book;
-  const authors = authorsArrayToString(props.book.authors || []);
+  } = props.book.volumeInfo;
+
+  const formattedAuthors = authorsArrayToString(authors || []);
 
   //Trim long descriptions
   if (description && description.length > 500) {
@@ -86,17 +74,28 @@ const Result = (props: ResultProps) => {
     thumbnail = <img src={imageLinks.thumbnail} alt={title} />;
   }
 
-  console.log(title, imageLinks, industryIdentifiers);
-
   return (
     <Wrapper>
       <ThumbnailWrapper>{thumbnail}</ThumbnailWrapper>
       <BookInfo>
-        <h2>{title}</h2>
-        <p>{authors}</p>
+        <h2>
+          <Link
+            to={{
+              pathname: `/b/${props.book.id}`,
+              state: {
+                book: props.book
+              }
+            }}
+          >
+            {title}
+          </Link>
+        </h2>
+        <p>{formattedAuthors}</p>
         <p>{publishedDate}</p>
         {description ? <BookDescription>{description}</BookDescription> : null}
-        {averageRating ? <Stars averageRating={averageRating} /> : null}
+        {averageRating ? (
+          <Stars averageRating={averageRating.toString()} />
+        ) : null}
       </BookInfo>
     </Wrapper>
   );
