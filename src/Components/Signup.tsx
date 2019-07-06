@@ -10,17 +10,23 @@ const Wrapper = styled.div`
 const Signup = (props: any) => {
   return (
     <Wrapper>
-      <h1>Sign Up</h1>
-      <p>
-        Name : <input />
-      </p>
-      <p>
-        Email : <input />
-      </p>
-      <p>
-        Password : <input />
-      </p>
-      <button onClick={props.toggleModal}> Cancel</button>
+      <form action="database-endpoint">
+        <h1>Sign Up</h1>
+        <p>
+          Name : <input />
+        </p>
+        <p>
+          Email : <input />
+        </p>
+        <p>
+          Password : <input />
+        </p>
+        <button> submit </button>
+        <button type="button" onClick={props.toggleModal}>
+          {" "}
+          Cancel
+        </button>
+      </form>
     </Wrapper>
   );
 };
