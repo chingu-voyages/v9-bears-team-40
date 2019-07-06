@@ -23,7 +23,6 @@ const Signup = (props: any) => {
         </p>
         <button> submit </button>
         <button type="button" onClick={props.toggleModal}>
-          {" "}
           Cancel
         </button>
       </form>
