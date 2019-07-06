@@ -19,6 +19,11 @@ const ThumbnailAndDetails = styled.div`
   order: 2;
 `;
 
+const Description = styled.div`
+  margin: 0;
+  line-height: 1.5rem;
+`;
+
 const Excerpts = styled.section`
   display: inline-flex;
   flex-direction: column;
@@ -79,7 +84,9 @@ const BookDetails: React.FunctionComponent<BookDetailsProps> = props => {
         </ThumbnailAndDetails>
 
         <Excerpts>
-          <p>{description || "No description available for this book."}</p>
+          <Description>
+            {description || "No description available for this book."}
+          </Description>
         </Excerpts>
       </InnerWrapper>
     </Wrapper>
