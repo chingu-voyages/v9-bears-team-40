@@ -5,7 +5,6 @@ import HomePage from "../Pages/HomePage";
 import ResultsPage from "../Pages/ResultsPage";
 import BookPage from "../Pages/BookPage";
 import Header from "../Components/Header";
-import Footer from "../Components/Footer";
 
 type IProps = {};
 
