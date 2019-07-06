@@ -1,23 +1,32 @@
-import React from "react";
+import * as React from "react";
 import styled from "../utils/theme";
 
-const Signup = styled.div`
-  background-color: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const Wrapper = styled.div`
+  background: white;
+  width: 300px;
+  height: 400px;
 `;
 
-const Child = () => {
+const Signup = (props: any) => {
   return (
-    <Signup>
-      <button>Click!</button>
-    </Signup>
+    <Wrapper>
+      <form action="database-endpoint">
+        <h1>Sign Up</h1>
+        <p>
+          Name : <input />
+        </p>
+        <p>
+          Email : <input />
+        </p>
+        <p>
+          Password : <input />
+        </p>
+        <button> submit </button>
+        <button type="button" onClick={props.toggleModal}>
+          Cancel
+        </button>
+      </form>
+    </Wrapper>
   );
 };
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "../utils/theme";
-import Modal from "./Modal";
 import SearchBar from "./SearchBar";
+import Modal from "./Modal/Modal";
 import Signup from "./Signup";
 
 //Prop types
@@ -56,7 +56,7 @@ class Header extends React.Component<HeaderProps, HeaderStates> {
         )}
         {this.state.isModalOpen && (
           <Modal>
-            <Signup onClick={() => this.toggleModal()}> Click me! </Signup>
+            <Signup toggleModal={() => this.toggleModal()} />
           </Modal>
         )}
       </Wrapper>
