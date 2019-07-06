@@ -56,10 +56,6 @@ class Header extends React.Component<HeaderProps, HeaderStates> {
         )}
         {this.state.isModalOpen && (
           <Modal>
-            {/* <div>
-              <p>Sign up</p>
-              <button onClick={() => this.toggleModal()}> Click Me</button>
-            </div> */}
             <Signup toggleModal={() => this.toggleModal()} />
           </Modal>
         )}
