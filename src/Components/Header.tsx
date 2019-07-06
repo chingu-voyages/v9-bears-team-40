@@ -1,10 +1,17 @@
 import * as React from "react";
 import styled from "../utils/theme";
-
+import Modal from "./Modal";
 import SearchBar from "./SearchBar";
+import Signup from "./Signup";
 
 //Prop types
-type HeaderProps = {};
+type HeaderProps = {
+  IsLoggedIn?: boolean;
+};
+
+type HeaderStates = {
+  isModalOpen?: boolean;
+};
 
 //Example styled component
 const Wrapper = styled.header`
@@ -22,14 +29,39 @@ const Wrapper = styled.header`
   }
 `;
 
-const Header: React.FunctionComponent<HeaderProps> = props => {
-  return (
-    <Wrapper>
-      <h1>Chapterly</h1>
-      <SearchBar />
-      <button>Login</button>
-    </Wrapper>
-  );
-};
+class Header extends React.Component<HeaderProps, HeaderStates> {
+  constructor(props: HeaderProps) {
+    super(props);
+    this.state = {
+      isModalOpen: false
+    };
+  }
+
+  toggleModal() {
+    this.setState(state => ({
+      ...state,
+      isModalOpen: !state.isModalOpen
+    }));
+  }
+
+  render() {
+    return (
+      <Wrapper>
+        <h1>Chapterly</h1>
+        <SearchBar />
+        {this.props.IsLoggedIn ? (
+          <button onClick={() => this.toggleModal()}> Sign out</button>
+        ) : (
+          <button onClick={() => this.toggleModal()}> Sign In</button>
+        )}
+        {this.state.isModalOpen && (
+          <Modal>
+            <Signup onClick={() => this.toggleModal()}> Click me! </Signup>
+          </Modal>
+        )}
+      </Wrapper>
+    );
+  }
+}
 
 export default Header;

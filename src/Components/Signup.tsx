@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "../utils/theme";
 
-const ChildDiv = styled.div`
+const Signup = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   height: 100%;
@@ -15,10 +15,10 @@ const ChildDiv = styled.div`
 
 const Child = () => {
   return (
-    <ChildDiv>
+    <Signup>
       <button>Click!</button>
-    </ChildDiv>
+    </Signup>
   );
 };
 
-export default Child;
+export default Signup;

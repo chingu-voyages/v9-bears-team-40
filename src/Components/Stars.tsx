@@ -21,7 +21,7 @@ const YellowStars = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  //   white-space: nowrap;
+  white-space: nowrap;
   overflow: hidden;
   width: ${(props: IStars) => props.averageRating};
   &:before {
