@@ -27,7 +27,7 @@ const Table = styled.div`
   grid-template-columns: repeat(2, auto);
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.section`
   display: inline-block;
 `;
 

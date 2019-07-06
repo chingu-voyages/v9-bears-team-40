@@ -19,8 +19,8 @@ const Title = styled.h1`
 `;
 
 const Wrapper = styled.div`
+  display: block;
   margin-bottom: 0.75rem;
-  order: 1;
   h1,
   h2 {
     margin: 0;
