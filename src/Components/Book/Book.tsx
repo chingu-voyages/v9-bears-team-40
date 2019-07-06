@@ -11,7 +11,7 @@ type BookDetailsProps = {
   book: googleBooksVolume;
 };
 
-const Thumnbnail = styled.img`
+const Thumbnail = styled.img`
   height: auto;
   width: 16rem;
 `;
@@ -41,7 +41,7 @@ const BookDetails: React.FunctionComponent<BookDetailsProps> = props => {
       <Info title={title} authors={authors} publishedDate={publishedDate} />
 
       {imageLinks && imageLinks.thumbnail ? (
-        <Thumnbnail src={imageLinks.thumbnail} />
+        <Thumbnail src={imageLinks.thumbnail} />
       ) : (
         <DefaultThumbnail />
       )}
