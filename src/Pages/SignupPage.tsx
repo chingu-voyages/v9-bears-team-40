@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   height: 400px;
 `;
 
-const Signup = (props: any) => {
+const SignupPage = (props: any) => {
   return (
     <Wrapper>
       <form action="database-endpoint">
@@ -30,4 +30,4 @@ const Signup = (props: any) => {
   );
 };
 
-export default Signup;
+export default SignupPage;
