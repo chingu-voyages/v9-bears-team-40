@@ -58,9 +58,9 @@ class SearchBar extends React.Component {
     return (
       <Wrapper>
         {/*Send the user to search results page if they submitted a search query*/}
-        {this.state.userHasRequestedResults ? (
+        {this.state.userHasRequestedResults && (
           <Redirect to={`/s/${this.state.keyword}`} />
-        ) : null}
+        )}
         <Input onChange={this.changeHandler} onKeyPress={this.handleKeyPress} />
         <Button to={`/s/${encodeURI(this.state.keyword)}`}>Search</Button>
       </Wrapper>
