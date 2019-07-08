@@ -80,10 +80,8 @@ const Result: React.FunctionComponent<ResultProps> = props => {
         </h2>
         <p>{formattedAuthors}</p>
         <p>{publishedDate}</p>
-        {description ? <BookDescription>{description}</BookDescription> : null}
-        {averageRating ? (
-          <Stars averageRating={averageRating.toString()} />
-        ) : null}
+        {description && <BookDescription>{description}</BookDescription>}
+        {averageRating && <Stars averageRating={averageRating.toString()} />}
       </BookInfo>
     </Wrapper>
   );
