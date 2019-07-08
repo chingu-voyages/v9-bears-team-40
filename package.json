@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/chingu-voyages/v9-bears-team-40/issues"
   },
-  "homepage": "https://github.com/chingu-voyages/v9-bears-team-40#readme",
+  "homepage": "https://v9-bears-team-40.herokuapp.com/",
   "private": true,
   "dependencies": {
     "@types/jest": "24.0.13",
