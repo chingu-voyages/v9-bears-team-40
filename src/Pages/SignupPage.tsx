@@ -5,6 +5,8 @@ const Wrapper = styled.div`
   background: white;
   width: 300px;
   height: 400px;
+  display: flex;
+  justify-content: center;
 `;
 
 const SignupPage = (props: any) => {
@@ -16,10 +18,10 @@ const SignupPage = (props: any) => {
           Name : <input />
         </p>
         <p>
-          Email : <input />
+          Email : <input type="email" />
         </p>
         <p>
-          Password : <input />
+          Password : <input type="password" />
         </p>
         <button> submit </button>
         <button type="button" onClick={props.toggleModal}>
