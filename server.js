@@ -32,13 +32,13 @@ app.post("/signin", (req, res) => {
 app.post("/register", (req, res) => {
   const { email, name, password } = req.body;
   console.log(email, name, password);
+  knex
+    .select("*")
+    .from("login")
+    .then(data => console.log(data));
+
   bcrypt.hash(password, saltRounds, function(err, hash) {
     console.log("hash", hash);
-    console.log(
-      knex("login")
-        .select()
-        .table("login")
-    );
     bcrypt.compare(password, hash, function(err, res) {
       if (res) console.log("true");
       else console.log("false");
