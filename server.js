@@ -34,6 +34,11 @@ app.post("/register", (req, res) => {
   console.log(email, name, password);
   bcrypt.hash(password, saltRounds, function(err, hash) {
     console.log("hash", hash);
+    console.log(
+      knex("login")
+        .select()
+        .table("login")
+    );
     bcrypt.compare(password, hash, function(err, res) {
       if (res) console.log("true");
       else console.log("false");
