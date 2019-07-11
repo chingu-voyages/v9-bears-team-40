@@ -1,18 +1,7 @@
 import React from "react";
 import styled from "../utils/theme";
-import { Link, Redirect } from "react-router-dom";
-
-const Button = styled(Link)`
-  background-color: ${props => props.theme.colors.link};
-  border: 0;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  outline: none;
-  padding: 0 0.75rem;
-  text-decoration: none;
-`;
+import { Redirect } from "react-router-dom";
+import { ButtonLink } from "./Button";
 
 const Input = styled.input`
   border: 0;
@@ -62,7 +51,9 @@ class SearchBar extends React.Component {
           <Redirect to={`/s/${this.state.keyword}`} />
         )}
         <Input onChange={this.changeHandler} onKeyPress={this.handleKeyPress} />
-        <Button to={`/s/${encodeURI(this.state.keyword)}`}>Search</Button>
+        <ButtonLink to={`/s/${encodeURI(this.state.keyword)}`}>
+          Search
+        </ButtonLink>
       </Wrapper>
     );
   }
