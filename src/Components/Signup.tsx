@@ -19,9 +19,9 @@ const Signup = (props: any) => {
           Email : <input />
         </p>
         <p>
-          Password : <input />
+          Password : <input type="password" />
         </p>
-        <button> submit </button>
+        <button>Sign up</button>
         <button type="button" onClick={props.toggleModal}>
           Cancel
         </button>
