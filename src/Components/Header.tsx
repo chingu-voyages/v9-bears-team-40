@@ -58,16 +58,18 @@ type HeaderState = {
   modal: any;
 };
 
+const initialState = {
+  isLoggedIn: false,
+  email: "",
+  name: "",
+  password: "",
+  modal: null
+};
+
 class Header extends React.Component<HeaderProps, HeaderState> {
   constructor(props: HeaderProps) {
     super(props);
-    this.state = {
-      isLoggedIn: false,
-      email: "",
-      name: "",
-      password: "",
-      modal: null
-    };
+    this.state = initialState;
   }
 
   authMethods = {
@@ -119,9 +121,12 @@ class Header extends React.Component<HeaderProps, HeaderState> {
         response
           .json()
           .then(user => {
+            //when email and password match
             if (user.id) {
               this.setState({ isLoggedIn: !this.state.isLoggedIn });
               this.authMethods.toggleModal(null);
+            } else {
+              alert("wrong credentials");
             }
           })
           .catch(err => console.log("login failed", err))
@@ -132,13 +137,22 @@ class Header extends React.Component<HeaderProps, HeaderState> {
   render() {
     const isLoggedIn = this.state.isLoggedIn;
     let button;
+    //if isLoggedIn is true, render logout
     if (isLoggedIn) {
-      button = <ButtonLink to="/">Log out</ButtonLink>;
-    } else {
+      button = (
+        <ButtonLink to="/" onClick={() => this.setState(initialState)}>
+          Log out
+        </ButtonLink>
+      );
+    }
+    //if isLoggedIn is false, render LogIn and SignUp
+    else {
       button = (
         <div style={{ display: "flex" }}>
           <Button
             onClick={() =>
+              //if user clicks this button,
+              //toggleModal function will save the following compoent as a state
               this.authMethods.toggleModal(
                 <Modal>
                   <LoginPage authMethods={this.authMethods} />
