@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import Modal from "./Modal/Modal";
 
 import SearchBar from "./SearchBar";
-import Signup from "./Signup";
 import SignupPage from "../Pages/SignupPage";
+import LoginPage from "../Pages/LoginPage";
 
 const Brand = styled(Link)`
   color: ${props => props.theme.colors.body};
@@ -51,59 +51,58 @@ const Wrapper = styled.header`
 type HeaderProps = {};
 
 type HeaderState = {
-  isModalOpen: boolean;
   isLoggedIn: boolean;
   email: string;
   name: string;
   password: string;
+  modal: any;
 };
 
 class Header extends React.Component<HeaderProps, HeaderState> {
   constructor(props: HeaderProps) {
     super(props);
     this.state = {
-      isModalOpen: false,
       isLoggedIn: false,
       email: "",
       name: "",
-      password: ""
+      password: "",
+      modal: null
     };
   }
 
-  onEmailChange = (event: any) => {
-    this.setState({ email: event.target.value });
-  };
-
-  onNameChange = (event: any) => {
-    this.setState({ name: event.target.value });
-  };
-
-  onPasswordChange = (event: any) => {
-    this.setState({ password: event.target.value });
-  };
-
-  toggleModal = () => {
-    const modalIsOpen = this.state.isModalOpen;
-    this.setState({
-      isModalOpen: !modalIsOpen
-    });
-  };
-
-  onSubmitSignIn = () => {
-    fetch("http://localhost:3000/register", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password,
-        name: this.state.name
+  authMethods = {
+    getInput: {
+      email: (event: any) => {
+        this.setState({ email: event.target.value });
+      },
+      name: (event: any) => {
+        this.setState({ name: event.target.value });
+      },
+      password: (event: any) => {
+        this.setState({ password: event.target.value });
+      }
+    },
+    toggleModal: (modal: any) => {
+      this.setState({
+        modal: modal
+      });
+    },
+    onSubmitSignIn: () => {
+      fetch("http://localhost:3000/register", {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: this.state.email,
+          password: this.state.password,
+          name: this.state.name
+        })
       })
-    })
-      .then(() => {
-        this.setState({ isLoggedIn: !this.state.isLoggedIn });
-        this.toggleModal();
-      })
-      .catch(err => console.log("register failed", err));
+        .then(() => {
+          this.setState({ isLoggedIn: !this.state.isLoggedIn });
+          this.authMethods.toggleModal(null);
+        })
+        .catch(err => console.log("register failed", err));
+    }
   };
 
   render() {
@@ -112,7 +111,33 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     if (isLoggedIn) {
       button = <ButtonLink to="/">Log out</ButtonLink>;
     } else {
-      button = <Signup toggleModal={this.toggleModal} />;
+      button = (
+        <div style={{ display: "flex" }}>
+          <Button
+            onClick={() =>
+              this.authMethods.toggleModal(
+                <Modal>
+                  <LoginPage authMethods={this.authMethods} />
+                </Modal>
+              )
+            }
+            style={{ marginRight: "0.25rem" }}
+          >
+            Log in
+          </Button>
+          <Button
+            onClick={() =>
+              this.authMethods.toggleModal(
+                <Modal>
+                  <SignupPage authMethods={this.authMethods} />
+                </Modal>
+              )
+            }
+          >
+            Sign up
+          </Button>
+        </div>
+      );
     }
 
     return (
@@ -123,17 +148,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
         </Brand>
         <SearchBar />
         {button}
-        {this.state.isModalOpen && (
-          <Modal>
-            <SignupPage
-              onEmailChange={this.onEmailChange}
-              onNameChange={this.onNameChange}
-              onPasswordChange={this.onPasswordChange}
-              onSubmitSignIn={this.onSubmitSignIn}
-              toggleModal={this.toggleModal}
-            />
-          </Modal>
-        )}
+        {this.state.modal}
       </Wrapper>
     );
   }
