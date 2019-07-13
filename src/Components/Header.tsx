@@ -4,17 +4,10 @@ import styled from "../utils/theme";
 import { Button, ButtonLink } from "./Button";
 import { Link } from "react-router-dom";
 import Modal from "./Modal/Modal";
+
 import SearchBar from "./SearchBar";
-import Signup from "./Signup";
-
-//Prop types
-type HeaderProps = {
-  IsLoggedIn?: boolean;
-};
-
-type HeaderState = {
-  isModalOpen: boolean;
-};
+import SignupPage from "../Pages/SignupPage";
+import LoginPage from "../Pages/LoginPage";
 
 const Brand = styled(Link)`
   color: ${props => props.theme.colors.body};
@@ -54,19 +47,99 @@ const Wrapper = styled.header`
   }
 `;
 
-class Header extends React.Component<HeaderProps, HeaderState> {
-  state = {
-    isModalOpen: false
-  };
+//Prop types
+type HeaderProps = {};
 
-  toggleModal() {
-    const modalIsOpen = this.state.isModalOpen;
-    this.setState({
-      isModalOpen: !modalIsOpen
-    });
+type HeaderState = {
+  isLoggedIn: boolean;
+  email: string;
+  name: string;
+  password: string;
+  modal: any;
+};
+
+class Header extends React.Component<HeaderProps, HeaderState> {
+  constructor(props: HeaderProps) {
+    super(props);
+    this.state = {
+      isLoggedIn: false,
+      email: "",
+      name: "",
+      password: "",
+      modal: null
+    };
   }
 
+  authMethods = {
+    getInput: {
+      email: (event: any) => {
+        this.setState({ email: event.target.value });
+      },
+      name: (event: any) => {
+        this.setState({ name: event.target.value });
+      },
+      password: (event: any) => {
+        this.setState({ password: event.target.value });
+      }
+    },
+    toggleModal: (modal: any) => {
+      this.setState({
+        modal: modal
+      });
+    },
+    onSubmitSignIn: () => {
+      fetch("http://localhost:3000/register", {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: this.state.email,
+          password: this.state.password,
+          name: this.state.name
+        })
+      })
+        .then(() => {
+          this.setState({ isLoggedIn: !this.state.isLoggedIn });
+          this.authMethods.toggleModal(null);
+        })
+        .catch(err => console.log("register failed", err));
+    }
+  };
+
   render() {
+    const isLoggedIn = this.state.isLoggedIn;
+    let button;
+    if (isLoggedIn) {
+      button = <ButtonLink to="/">Log out</ButtonLink>;
+    } else {
+      button = (
+        <div style={{ display: "flex" }}>
+          <Button
+            onClick={() =>
+              this.authMethods.toggleModal(
+                <Modal>
+                  <LoginPage authMethods={this.authMethods} />
+                </Modal>
+              )
+            }
+            style={{ marginRight: "0.25rem" }}
+          >
+            Log in
+          </Button>
+          <Button
+            onClick={() =>
+              this.authMethods.toggleModal(
+                <Modal>
+                  <SignupPage authMethods={this.authMethods} />
+                </Modal>
+              )
+            }
+          >
+            Sign up
+          </Button>
+        </div>
+      );
+    }
+
     return (
       <Wrapper>
         <Brand to="/">
@@ -74,24 +147,8 @@ class Header extends React.Component<HeaderProps, HeaderState> {
           <h1>Chapterly</h1>
         </Brand>
         <SearchBar />
-        {this.props.IsLoggedIn ? (
-          <ButtonLink to="/">Log out</ButtonLink>
-        ) : (
-          <div style={{ display: "flex" }}>
-            <Button
-              onClick={() => this.toggleModal()}
-              style={{ marginRight: "0.25rem" }}
-            >
-              Log in
-            </Button>
-            <Button onClick={() => this.toggleModal()}>Sign up</Button>
-          </div>
-        )}
-        {this.state.isModalOpen && (
-          <Modal>
-            <Signup toggleModal={() => this.toggleModal()} />
-          </Modal>
-        )}
+        {button}
+        {this.state.modal}
       </Wrapper>
     );
   }

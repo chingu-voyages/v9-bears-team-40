@@ -8,21 +8,15 @@ import Header from "../Components/Header";
 
 type IProps = {};
 
-type IStates = {
-  IsLoggedIn?: boolean;
-};
+type IStates = {};
 
 //going to add a state for header component.
 //header component is going to receive props from here to see if user is logged in or not
 class Routes extends React.Component<IProps, IStates> {
-  state = {
-    IsLoggedIn: false
-  };
-
   render() {
     return (
       <React.Fragment>
-        <Header IsLoggedIn={this.state.IsLoggedIn} />
+        <Header />
         {/*Home*/}
         <Route exact path="/" component={HomePage} />
 

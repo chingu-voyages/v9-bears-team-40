@@ -1,10 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
 import { createGlobalStyle, ThemeProvider, theme } from "./utils/theme";
-
 import App from "./Components/App";
-
 import * as serviceWorker from "./serviceWorker";
 
 const GlobalStyles = createGlobalStyle`
