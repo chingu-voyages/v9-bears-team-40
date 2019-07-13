@@ -87,7 +87,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
         modal: modal
       });
     },
-    onSubmitSignIn: () => {
+    onSubmitSignUp: () => {
       fetch("http://localhost:3000/register", {
         method: "post",
         headers: { "Content-Type": "application/json" },
@@ -97,11 +97,35 @@ class Header extends React.Component<HeaderProps, HeaderState> {
           name: this.state.name
         })
       })
-        .then(() => {
-          this.setState({ isLoggedIn: !this.state.isLoggedIn });
-          this.authMethods.toggleModal(null);
+        .then(response => response.json())
+        .then(user => {
+          if (user.id) {
+            this.setState({ isLoggedIn: !this.state.isLoggedIn });
+            this.authMethods.toggleModal(null);
+          }
         })
         .catch(err => console.log("register failed", err));
+    },
+
+    onSubmitSignIn: () => {
+      fetch("http://localhost:3000/signin", {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: this.state.email,
+          password: this.state.password
+        })
+      }).then(response =>
+        response
+          .json()
+          .then(user => {
+            if (user.id) {
+              this.setState({ isLoggedIn: !this.state.isLoggedIn });
+              this.authMethods.toggleModal(null);
+            }
+          })
+          .catch(err => console.log("login failed", err))
+      );
     }
   };
 
