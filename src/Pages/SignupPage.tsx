@@ -44,14 +44,9 @@ const Wrapper = styled.div`
   max-width: 20rem;
   height: 100%;
   width: 100%;
-  >>>>>>>84e1887e65422d50cb7d04acd9f40705ccfd12c9: src/Components/Signup.tsx;
 `;
 type IProps = {
-  onEmailChange: (event: any) => void;
-  onNameChange: (event: any) => void;
-  onPasswordChange: (event: any) => void;
-  onSubmitSignIn: () => void;
-  toggleModal: () => void;
+  authMethods: any;
 };
 type IState = {};
 
@@ -68,7 +63,7 @@ class SignupPage extends React.Component<IProps, IState> {
             top: 0,
             right: 0
           }}
-          onClick={this.props.toggleModal}
+          onClick={() => this.props.authMethods.toggleModal(null)}
         >
           <i className="fas fa-times" />
         </Button>
@@ -76,14 +71,19 @@ class SignupPage extends React.Component<IProps, IState> {
           <h1>Sign Up</h1>
           <FormFields>
             <label>Name:</label>
-            <input onChange={this.props.onNameChange} />
+            <input onChange={this.props.authMethods.getInput.name} />
             <label>Email:</label>
-            <input onChange={this.props.onEmailChange} />
+            <input onChange={this.props.authMethods.getInput.email} />
             <label>Password:</label>
-            <input onChange={this.props.onPasswordChange} type="password" />
+            <input
+              onChange={this.props.authMethods.getInput.password}
+              type="password"
+            />
           </FormFields>
 
-          <Button onClick={this.props.onSubmitSignIn}>Sign up</Button>
+          <Button onClick={this.props.authMethods.onSubmitSignIn}>
+            Sign up
+          </Button>
         </InnderWrapper>
       </Wrapper>
     );
