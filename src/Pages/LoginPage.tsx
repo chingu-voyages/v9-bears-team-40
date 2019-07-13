@@ -51,9 +51,6 @@ type IProps = {
 type IState = {};
 
 class SignupPage extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-  }
   render() {
     return (
       <Wrapper>
