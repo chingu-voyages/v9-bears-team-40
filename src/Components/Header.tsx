@@ -6,16 +6,8 @@ import { Link } from "react-router-dom";
 import Modal from "./Modal/Modal";
 
 import SearchBar from "./SearchBar";
+import Signup from "./Signup";
 import SignupPage from "../Pages/SignupPage";
-
-//Prop types
-type HeaderProps = {
-  IsLoggedIn?: boolean;
-};
-
-type HeaderState = {
-  isModalOpen: boolean;
-};
 
 const Brand = styled(Link)`
   color: ${props => props.theme.colors.body};
@@ -55,19 +47,74 @@ const Wrapper = styled.header`
   }
 `;
 
+//Prop types
+type HeaderProps = {};
+
+type HeaderState = {
+  isModalOpen: boolean;
+  isLoggedIn: boolean;
+  email: string;
+  name: string;
+  password: string;
+};
+
 class Header extends React.Component<HeaderProps, HeaderState> {
-  state = {
-    isModalOpen: false
+  constructor(props: HeaderProps) {
+    super(props);
+    this.state = {
+      isModalOpen: false,
+      isLoggedIn: false,
+      email: "",
+      name: "",
+      password: ""
+    };
+  }
+
+  onEmailChange = (event: any) => {
+    this.setState({ email: event.target.value });
   };
 
-  toggleModal() {
+  onNameChange = (event: any) => {
+    this.setState({ name: event.target.value });
+  };
+
+  onPasswordChange = (event: any) => {
+    this.setState({ password: event.target.value });
+  };
+
+  toggleModal = () => {
     const modalIsOpen = this.state.isModalOpen;
     this.setState({
       isModalOpen: !modalIsOpen
     });
-  }
+  };
+
+  onSubmitSignIn = () => {
+    fetch("http://localhost:3000/register", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password,
+        name: this.state.name
+      })
+    })
+      .then(() => {
+        this.setState({ isLoggedIn: !this.state.isLoggedIn });
+        this.toggleModal();
+      })
+      .catch(err => console.log("register failed", err));
+  };
 
   render() {
+    const isLoggedIn = this.state.isLoggedIn;
+    let button;
+    if (isLoggedIn) {
+      button = <ButtonLink to="/">Log out</ButtonLink>;
+    } else {
+      button = <Signup toggleModal={this.toggleModal} />;
+    }
+
     return (
       <Wrapper>
         <Brand to="/">
@@ -75,22 +122,16 @@ class Header extends React.Component<HeaderProps, HeaderState> {
           <h1>Chapterly</h1>
         </Brand>
         <SearchBar />
-        {this.props.IsLoggedIn ? (
-          <ButtonLink to="/">Log out</ButtonLink>
-        ) : (
-          <div style={{ display: "flex" }}>
-            <Button
-              onClick={() => this.toggleModal()}
-              style={{ marginRight: "0.25rem" }}
-            >
-              Log in
-            </Button>
-            <Button onClick={() => this.toggleModal()}>Sign up</Button>
-          </div>
-        )}
+        {button}
         {this.state.isModalOpen && (
           <Modal>
-            <SignupPage toggleModal={() => this.toggleModal()} />
+            <SignupPage
+              onEmailChange={this.onEmailChange}
+              onNameChange={this.onNameChange}
+              onPasswordChange={this.onPasswordChange}
+              onSubmitSignIn={this.onSubmitSignIn}
+              toggleModal={this.toggleModal}
+            />
           </Modal>
         )}
       </Wrapper>

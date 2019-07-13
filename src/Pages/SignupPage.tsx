@@ -47,45 +47,18 @@ const Wrapper = styled.div`
   >>>>>>>84e1887e65422d50cb7d04acd9f40705ccfd12c9: src/Components/Signup.tsx;
 `;
 type IProps = {
-  toggleModal: any;
+  onEmailChange: (event: any) => void;
+  onNameChange: (event: any) => void;
+  onPasswordChange: (event: any) => void;
+  onSubmitSignIn: () => void;
+  toggleModal: () => void;
 };
-type IState = {
-  email: string;
-  name: string;
-  password: string;
-};
+type IState = {};
 
 class SignupPage extends React.Component<IProps, IState> {
-  state = {
-    email: "",
-    name: "",
-    password: ""
-  };
-
-  onEmailChange = (event: any) => {
-    this.setState({ email: event.target.value });
-  };
-
-  onNameChange = (event: any) => {
-    this.setState({ name: event.target.value });
-  };
-
-  onPasswordChange = (event: any) => {
-    this.setState({ password: event.target.value });
-  };
-
-  onSubmitSignIn = () => {
-    fetch("http://localhost:3000/register", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password,
-        name: this.state.name
-      })
-    }).then(this.props.toggleModal());
-  };
-
+  constructor(props: IProps) {
+    super(props);
+  }
   render() {
     return (
       <Wrapper>
@@ -103,14 +76,14 @@ class SignupPage extends React.Component<IProps, IState> {
           <h1>Sign Up</h1>
           <FormFields>
             <label>Name:</label>
-            <input onChange={this.onNameChange} />
+            <input onChange={this.props.onNameChange} />
             <label>Email:</label>
-            <input onChange={this.onEmailChange} />
+            <input onChange={this.props.onEmailChange} />
             <label>Password:</label>
-            <input onChange={this.onPasswordChange} type="password" />
+            <input onChange={this.props.onPasswordChange} type="password" />
           </FormFields>
 
-          <Button onClick={this.onSubmitSignIn}>Sign up</Button>
+          <Button onClick={this.props.onSubmitSignIn}>Sign up</Button>
         </InnderWrapper>
       </Wrapper>
     );
