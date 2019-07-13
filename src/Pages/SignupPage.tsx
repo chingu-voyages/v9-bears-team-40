@@ -78,7 +78,7 @@ class SignupPage extends React.Component<IProps, IState> {
             />
           </FormFields>
 
-          <Button onClick={this.props.authMethods.onSubmitSignIn}>
+          <Button onClick={this.props.authMethods.onSubmitSignUp}>
             Sign up
           </Button>
         </InnderWrapper>

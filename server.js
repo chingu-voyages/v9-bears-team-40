@@ -34,48 +34,67 @@ app.get("/test", (req, res) => {
 });
 
 app.post("/signin", (req, res) => {
-  if (req.body.email && req.body.password) {
-    console.log(req.body);
-    res.json("success");
-  } else {
-    res.status(400).json("signin error");
-  }
+  knex
+    .select("email", "hash")
+    .from("login")
+    .where("email", "=", req.body.email)
+    .then(data => {
+      const isValid = bcrypt.compareSync(req.body.password, data[0].hash);
+      if (isValid) {
+        return knex
+          .select("*")
+          .from("users")
+          .where("email", "=", req.body.email)
+          .then(user => {
+            res.json(user[0]);
+          })
+          .catch(err => res.status(400).json("unable to get user"));
+      } else {
+        res.status(400).json("wrong credentials");
+      }
+    })
+    .catch(err => res.status(400).json("wrong credentials"));
 });
 
 app.post("/register", (req, res) => {
   const { email, name, password } = req.body;
-  console.log(email, name, password);
-  knex("users")
-    .returning("*")
-    .insert({
-      email: email,
-      name: name,
-      joined: new Date()
-    })
-    .then(user => {
-      res.json(user[0]);
+  const salt = bcrypt.genSaltSync(saltRounds);
+  const hash = bcrypt.hashSync(password, salt);
+
+  knex
+    .transaction(trx => {
+      return trx
+        .insert({
+          hash: hash,
+          email: email
+        })
+        .into("login")
+        .returning("email")
+        .then(loginEmail => {
+          return trx("users")
+            .returning("*")
+            .insert({
+              email: loginEmail[0],
+              name: name,
+              joined: new Date()
+            })
+            .then(user => {
+              res.json(user[0]);
+            });
+        })
+        .then(trx.commit);
     })
     .catch(err => res.status(400).json("unable to register"));
-
-  // bcrypt.hash(password, saltRounds, function(err, hash) {
-  //   console.log("hash", hash);
-  //   bcrypt.compare(password, hash, function(err, res) {
-  //     if (res) console.log("true");
-  //     else console.log("false");
-  //   });
-  // });
 });
 
 app.get("/profile/:id", (req, res) => {
   const { id } = req.params;
-  console.log(id);
   res.json("profile success");
   // res.status(404).json('profile error, no such user');
 });
 
 app.put("profile/:id", (req, res) => {
   const { id } = req.params;
-  console.log(id);
   res.json("profile success");
   // res.status(404).json('profile error, no such user');
 });
