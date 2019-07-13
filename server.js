@@ -4,11 +4,24 @@ const app = express();
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+
+// production
+// const knex = require("knex")({
+//   client: "pg",
+//   connection: {
+//     connectionString: process.env.DATABASE_URL,
+//     ssl: true
+//   }
+// });
+
+// development
 const knex = require("knex")({
   client: "pg",
   connection: {
-    connectionString: process.env.DATABASE_URL,
-    ssl: true
+    host: "127.0.0.1",
+    user: "yunsangil",
+    password: "",
+    database: "postgres"
   }
 });
 
@@ -32,19 +45,25 @@ app.post("/signin", (req, res) => {
 app.post("/register", (req, res) => {
   const { email, name, password } = req.body;
   console.log(email, name, password);
-  knex
-    .select("*")
-    .from("login")
-    .then(data => console.log(data));
+  knex("users")
+    .returning("*")
+    .insert({
+      email: email,
+      name: name,
+      joined: new Date()
+    })
+    .then(user => {
+      res.json(user[0]);
+    })
+    .catch(err => res.status(400).json("unable to register"));
 
-  bcrypt.hash(password, saltRounds, function(err, hash) {
-    console.log("hash", hash);
-    bcrypt.compare(password, hash, function(err, res) {
-      if (res) console.log("true");
-      else console.log("false");
-    });
-  });
-  res.json("register success");
+  // bcrypt.hash(password, saltRounds, function(err, hash) {
+  //   console.log("hash", hash);
+  //   bcrypt.compare(password, hash, function(err, res) {
+  //     if (res) console.log("true");
+  //     else console.log("false");
+  //   });
+  // });
 });
 
 app.get("/profile/:id", (req, res) => {
